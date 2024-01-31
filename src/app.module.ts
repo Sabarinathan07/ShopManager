@@ -1,32 +1,24 @@
-/* eslint-disable prettier/prettier */
+import { DbModule } from './database/config';
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { ItemModule } from './item/item.module';
-import { OrderModule } from './order/order.module';
-import { AppDataSource } from './database/config';
+import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ItemModule } from './repositories/item/item.module';
+import { UserModule } from './repositories/user/user.module';
+import { OrderModule } from './repositories/order/order.module';
 
 @Module({
-  imports: [UserModule, ItemModule, OrderModule],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: `.env`,
+        }),
+        DbModule, // Use the DatabaseModule here
+        UserModule,
+        ItemModule,
+        OrderModule,
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
-export class AppModule {
-  constructor() {
-    AppDataSource.initialize()
-      .then(() => console.log('Database connected'))
-      .catch((err) => {
-        console.log(err);
-        process.exit(1);
-      });
-  }
-}
-
-// import { Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-
-// @Module({
-//   imports: [],
-  
-// })
-// export class AppModule {}
+export class AppModule {}
