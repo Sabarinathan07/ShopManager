@@ -1,6 +1,14 @@
 import { CreateItemDto } from 'src/dtos/createItem.dto';
 import { ItemService } from './item.service';
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Put,
+    Req,
+} from '@nestjs/common';
 import { customRequest } from 'src/interfaces/request.interface';
 
 @Controller('/api/item')
@@ -14,4 +22,28 @@ export class ItemController {
     ) {
         return await this.itemService.createItem(req, body);
     }
+
+    @Get()
+    async getAllItems() {
+        return await this.itemService.getAllItems();
+    }
+
+    @Get('/:id')
+    async getItemById(@Param('id') id: string) {
+        return await this.itemService.getItemById(id);
+    }
+
+    @Put('/:id')
+    async updateItem(
+        @Param('id') id: string,
+        @Body() body: Partial<CreateItemDto>,
+    ) {
+        return await this.itemService.updateItem(id, body);
+    }
+
+    @Put('/delete/:id')
+    async deleteItemQuantity(@Param('id') id: string) {
+        return await this.itemService.deleteItemQuantity(id);
+    }
+
 }

@@ -9,7 +9,6 @@ import { ConfigModule } from '@nestjs/config';
     imports: [TypeOrmModule.forFeature([Item]), ConfigModule],
     providers: [ItemService],
     controllers: [ItemController],
+    exports: [ItemService],
 })
-export class ItemModule {
-    
-}
+export class ItemModule {}

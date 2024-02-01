@@ -26,4 +26,5 @@ export class Order {
 
     @ManyToOne(() => Item, (item) => item.id)
     item: Item;
+    newOrder: Promise<Item>;
 }
