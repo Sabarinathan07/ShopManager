@@ -1,4 +1,4 @@
-import { customRequest } from './../interfaces/request.interface';
+import { customRequest } from '../interfaces/request.interface';
 import {
     Injectable,
     NestMiddleware,

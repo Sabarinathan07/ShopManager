@@ -10,4 +10,6 @@ import { ConfigModule } from '@nestjs/config';
     providers: [ItemService],
     controllers: [ItemController],
 })
-export class ItemModule {}
+export class ItemModule {
+    
+}

@@ -9,10 +9,11 @@ import { AuthMiddleware } from 'src/middleware/auth.middleware';
 @Module({
     imports: [TypeOrmModule.forFeature([User]), ConfigModule],
     providers: [UserService],
+    exports: [UserService],
     controllers: [UserController],
 })
 export class UserModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer.apply(AuthMiddleware).forRoutes('api/user');
-    }
+    // configure(consumer: MiddlewareConsumer) {
+    //     consumer.apply(AuthMiddleware).forRoutes('api/user');
+    // }
 }
