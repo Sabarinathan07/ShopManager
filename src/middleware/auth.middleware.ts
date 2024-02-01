@@ -29,22 +29,19 @@ export class AuthMiddleware implements NestMiddleware {
             }
 
             const token = req.headers.authorization.split(' ')[1];
-            console.log(token);
 
             if (!token) {
                 throw new UnauthorizedException('Token not provided');
             }
             const JWT_SECRET =
                 'c1yx9/MFM+Gr+3LFtjLYLTQK2@IXOAQPgx2bHReDWA9wy5Q8ilaUgRoxVloxYHoT';
-            console.log(JWT_SECRET);
 
             const decoded = verify(token, JWT_SECRET);
-            console.log(decoded);
 
             req.currentUser = await this.userService.findById(
                 decoded.id,
             );
-            console.log(req.currentUser);
+            // console.log(req.currentUser);
 
             next();
         } catch (error) {
