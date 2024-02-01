@@ -4,13 +4,11 @@ import {
     Controller,
     Get,
     Post,
-    UseGuards,
     Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from 'src/dtos/createUser.dto';
 import { LoginUserDto } from 'src/dtos/loginUser.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { customRequest } from 'src/interfaces/request.interface';
 
 @Controller('/api')

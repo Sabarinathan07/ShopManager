@@ -4,9 +4,7 @@ import {
     NestMiddleware,
     UnauthorizedException,
 } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { User } from 'src/entity/user.entity';
-import { Role } from 'src/enums/Role';
+import { Response, NextFunction } from 'express';
 import { UserService } from 'src/repositories/user/user.service';
 import { verify } from 'jsonwebtoken';
 
@@ -33,9 +31,8 @@ export class AuthMiddleware implements NestMiddleware {
             if (!token) {
                 throw new UnauthorizedException('Token not provided');
             }
-            const JWT_SECRET =
-                'c1yx9/MFM+Gr+3LFtjLYLTQK2@IXOAQPgx2bHReDWA9wy5Q8ilaUgRoxVloxYHoT';
 
+            const JWT_SECRET = process.env.JWT_SECRET;
             const decoded = verify(token, JWT_SECRET);
 
             req.currentUser = await this.userService.findById(

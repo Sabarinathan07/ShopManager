@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from 'src/dtos/createUser.dto';
 import { User } from 'src/entity/user.entity';
@@ -8,14 +7,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginUserDto } from 'src/dtos/loginUser.dto';
 import * as bcrypt from 'bcrypt';
-import { payload } from 'src/dtos/payload.dto';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private repo: Repository<User>,
-        private configService: ConfigService,
-        // private authService: AuthService,
     ) {}
 
     async createUser(body: CreateUserDto) {
@@ -46,7 +42,6 @@ export class UserService {
         const token = await AuthService.generateToken({ id: id });
         return { user, token };
     }
-
 
     async findByEmail(email: string) {
         return await this.repo.findOne({ where: { email } });

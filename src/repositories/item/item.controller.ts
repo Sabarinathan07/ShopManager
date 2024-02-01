@@ -45,5 +45,4 @@ export class ItemController {
     async deleteItemQuantity(@Param('id') id: string) {
         return await this.itemService.deleteItemQuantity(id);
     }
-
 }

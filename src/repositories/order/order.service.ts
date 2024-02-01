@@ -32,6 +32,7 @@ export class OrderService {
         const order = await this.repo.create(newOrder);
         return this.repo.save(order);
     }
+
     async updateOrder(body: any, id: string) {
         const orderToUpdate = await this.repo.findOneBy({ id });
         if (!orderToUpdate)
@@ -50,9 +51,11 @@ export class OrderService {
 
         return this.repo.save(orderToUpdate);
     }
-    getAllOrders() {
-        return this.repo.find();
+
+    async getAllOrders() {
+        return await this.repo.find();
     }
+
     async getAmountByDay(body: any) {
         const startOfDay = new Date(body.date);
         startOfDay.setUTCHours(0, 0, 0, 0);
@@ -71,6 +74,7 @@ export class OrderService {
         );
         return { totalAmount };
     }
+
     async getAmountByWeek(body: any) {
         const startOfWeek = new Date(
             Date.UTC(body.year, 0, (body.week - 1) * 7 + 1),
@@ -89,6 +93,7 @@ export class OrderService {
         );
         return { totalAmount };
     }
+
     async getAmountByMonth(body: any) {
         const startOfMonth = new Date(
             Date.UTC(body.year, body.month - 1, 0),
