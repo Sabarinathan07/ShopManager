@@ -4,7 +4,7 @@ import { createOrderDto } from 'src/dtos/createOrder.dto';
 import { Item } from 'src/entity/item.entity';
 import { Order } from 'src/entity/order.entity';
 import { User } from 'src/entity/user.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
@@ -53,13 +53,59 @@ export class OrderService {
     getAllOrders() {
         return this.repo.find();
     }
-    getAmountByDay(body: any) {
-        throw new Error('Method not implemented.');
+    async getAmountByDay(body: any) {
+        const startOfDay = new Date(body.date);
+        startOfDay.setUTCHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(body.date);
+        endOfDay.setUTCHours(23, 59, 59, 999);
+
+        const orders = await this.repo.find({
+            where: {
+                transactionDate: Between(startOfDay, endOfDay),
+            },
+        });
+        const totalAmount = orders.reduce(
+            (acc, order) => acc + order.amount,
+            0,
+        );
+        return { totalAmount };
     }
-    getAmountByWeek(body: any) {
-        throw new Error('Method not implemented.');
+    async getAmountByWeek(body: any) {
+        const startOfWeek = new Date(
+            Date.UTC(body.year, 0, (body.week - 1) * 7 + 1),
+        );
+        const endOfWeek = new Date(
+            Date.UTC(body.year, 0, body.week * 7, 23, 59, 59, 999),
+        );
+        const orders = await this.repo.find({
+            where: {
+                transactionDate: Between(startOfWeek, endOfWeek),
+            },
+        });
+        const totalAmount = orders.reduce(
+            (acc, order) => acc + order.amount,
+            0,
+        );
+        return { totalAmount };
     }
-    getAmountByMonth(body: any) {
-        throw new Error('Method not implemented.');
+    async getAmountByMonth(body: any) {
+        const startOfMonth = new Date(
+            Date.UTC(body.year, body.month - 1, 0),
+        );
+        const endOfMonth = new Date(
+            Date.UTC(body.year, body.month, 0, 23, 59, 59, 999),
+        );
+
+        const orders = await this.repo.find({
+            where: {
+                transactionDate: Between(startOfMonth, endOfMonth),
+            },
+        });
+        const totalAmount = orders.reduce(
+            (acc, order) => acc + order.amount,
+            0,
+        );
+        return { totalAmount };
     }
 }
