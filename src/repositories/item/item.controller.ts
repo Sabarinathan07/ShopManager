@@ -10,6 +10,7 @@ import {
     Req,
 } from '@nestjs/common';
 import { customRequest } from 'src/interfaces/request.interface';
+import { UpdateItemDto } from 'src/dtos/updateItem.dto';
 
 @Controller('/api/item')
 export class ItemController {
@@ -36,7 +37,7 @@ export class ItemController {
     @Put('/:id')
     async updateItem(
         @Param('id') id: string,
-        @Body() body: Partial<CreateItemDto>,
+        @Body() body: Partial<UpdateItemDto>,
     ) {
         return await this.itemService.updateItem(id, body);
     }

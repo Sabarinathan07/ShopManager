@@ -3,6 +3,7 @@ import {
     Body,
     Controller,
     Get,
+    HttpCode,
     Post,
     Req,
 } from '@nestjs/common';
@@ -24,6 +25,7 @@ export class UserController {
         return await this.userService.createUser(body);
     }
 
+    @HttpCode(200)
     @Post('/login')
     async loginUser(@Body() body: LoginUserDto) {
         return await this.userService.login(body);

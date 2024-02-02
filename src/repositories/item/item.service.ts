@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateItemDto } from 'src/dtos/createItem.dto';
+import { UpdateItemDto } from 'src/dtos/updateItem.dto';
 import { Item } from 'src/entity/item.entity';
 import { customRequest } from 'src/interfaces/request.interface';
 import { Repository } from 'typeorm';
@@ -25,10 +26,15 @@ export class ItemService {
     }
 
     async getItemById(id: string) {
-        return await this.repo.findOneBy({ id });
+        try {
+            const found = await this.repo.findOneBy({ id });
+            return found;
+        } catch (error) {
+            throw new NotFoundException('Could not find item');
+        }
     }
 
-    async updateItem(id: string, body: Partial<CreateItemDto>) {
+    async updateItem(id: string, body: Partial<UpdateItemDto>) {
         const itemToUpdate = await this.repo.findOneBy({ id });
         if (!itemToUpdate)
             throw new NotFoundException('Item not found');
