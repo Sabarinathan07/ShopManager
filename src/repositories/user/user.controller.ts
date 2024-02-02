@@ -1,9 +1,10 @@
 import {
-    BadRequestException,
     Body,
     Controller,
+    Delete,
     Get,
     HttpCode,
+    Param,
     Post,
     Req,
 } from '@nestjs/common';
@@ -18,10 +19,6 @@ export class UserController {
 
     @Post('/register')
     async createUser(@Body() body: CreateUserDto) {
-        const users = await this.userService.findByEmail(body.email);
-        if (users) {
-            throw new BadRequestException('email in use');
-        }
         return await this.userService.createUser(body);
     }
 
@@ -35,5 +32,11 @@ export class UserController {
     // @UseGuards(AuthGuard())
     async getUser(@Req() req: customRequest) {
         return req.currentUser;
+    }
+
+    @Delete('/:id')
+    async deleteUserById(@Param() id: string) {
+        console.log(id);
+        return await this.userService.deleteUserById(id);
     }
 }

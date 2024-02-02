@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/dtos/createUser.dto';
 import { User } from 'src/entity/user.entity';
 import { AuthService } from 'src/helpers/AuthService';
@@ -15,6 +19,10 @@ export class UserService {
     ) {}
 
     async createUser(body: CreateUserDto) {
+        const users = await this.findByEmail(body.email);
+        if (users) {
+            throw new BadRequestException('email in use');
+        }
         const hashPass = await AuthService.encryptPass(body.password);
         const newUser = new User();
         newUser.name = body.name;
@@ -48,6 +56,21 @@ export class UserService {
     }
 
     async findById(id: string) {
-        return await this.repo.findOne({ where: { id } });
+        try {
+            return await this.repo.find({ where: { id } });
+        } catch (error) {
+            throw new NotFoundException(
+                `User with ID "${id}" not found`,
+            );
+        }
+    }
+    async deleteUserById(id) {
+        const user = await this.findById(id.id);
+        if (!user) {
+            throw new NotFoundException(
+                `User with ID "${id.id}" not found`,
+            );
+        }
+        return await this.repo.delete(id);
     }
 }

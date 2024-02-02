@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { createOrderDto } from 'src/dtos/createOrder.dto';
 import { Item } from 'src/entity/item.entity';
@@ -19,7 +23,11 @@ export class OrderService {
         if (!itemDetails)
             throw new NotFoundException('Item not found');
 
-        // comment the next two lines if any errors ariswe
+        if (body.quantity > itemDetails.quantity)
+            throw new BadRequestException(
+                'Requested quantity exceeds available stock try with a small amount',
+            );
+
         itemDetails.quantity = itemDetails.quantity - body.quantity;
         await this.itemRepo.save(itemDetails);
 
