@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { ItemController } from './item.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,6 +19,9 @@ import { UserModule } from '../user/user.module';
 })
 export class ItemModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(isShopkeeperMiddleware).forRoutes('api/item');
+        consumer
+            .apply(isShopkeeperMiddleware)
+            .exclude({ path: 'api/item', method: RequestMethod.GET })
+            .forRoutes('api/item');
     }
 }

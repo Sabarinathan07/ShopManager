@@ -8,6 +8,9 @@ import { UserModule } from './repositories/user/user.module';
 import { OrderModule } from './repositories/order/order.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const cookieSession = require('cookie-session');
+
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -27,6 +30,13 @@ export class AppModule {
         consumer
             .apply(AuthMiddleware)
             .exclude('api/login', '/api/register')
+            .forRoutes('*');
+        consumer
+            .apply(
+                cookieSession({
+                    keys: ['asdfasfd'],
+                }),
+            )
             .forRoutes('*');
     }
 }
