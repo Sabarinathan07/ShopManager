@@ -8,12 +8,10 @@ import { Observable, map } from 'rxjs';
 import { Timeline } from 'src/enums/Timeline';
 
 export class TimelineInterceptor implements NestInterceptor {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     intercept(
         context: ExecutionContext,
         _handler: CallHandler,
     ): Observable<any> {
-        // throw new Error('Method not implemented.');
         const req = context.switchToHttp().getRequest();
         if (req.params.timeline == Timeline.day) {
             if (!req.body.date) {
