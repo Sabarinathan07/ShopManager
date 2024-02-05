@@ -14,8 +14,7 @@ export class UserController {
     }
 
     @Delete('/:id')
-    async deleteUserById(@Param() idO) {
-        const id = idO.id;
+    async deleteUserById(@Param('id') id: string) {
         return await this.userService.deleteUserById(id);
     }
 }

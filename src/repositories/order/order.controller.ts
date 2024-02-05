@@ -1,4 +1,6 @@
+import { TimelineI } from '../../interfaces/timeline.interface';
 import {
+    BadRequestException,
     Body,
     Controller,
     Get,
@@ -6,9 +8,13 @@ import {
     Post,
     Put,
     Req,
+    UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { createOrderDto } from 'src/dtos/createOrder.dto';
+import { createOrderDto } from 'src/dtos/order.dto';
+import { Timeline } from 'src/enums/Timeline';
+import { PartialTimeLineDto } from 'src/dtos/timeline.dto';
+import { TimelineInterceptor } from 'src/Interceptor/timeline.interceptor';
 
 @Controller('api/order')
 export class OrderController {
@@ -32,18 +38,20 @@ export class OrderController {
         return await this.orderService.getAllOrders();
     }
 
-    @Get('/day')
-    async getAmountByDay(@Body() body) {
-        return await this.orderService.getAmountByDay(body);
-    }
-
-    @Get('/week')
-    async getAmountByWeek(@Body() body) {
-        return await this.orderService.getAmountByWeek(body);
-    }
-
-    @Get('/month')
-    async getAmountByMonth(@Body() body) {
-        return await this.orderService.getAmountByMonth(body);
+    @UseInterceptors(TimelineInterceptor)
+    @Post('/:timeline')
+    async getAmount(
+        @Body() body: PartialTimeLineDto,
+        @Param('timeline') timeline: Timeline,
+    ) {
+        if (timeline == Timeline.day) {
+            return await this.orderService.getAmountByDay(body);
+        } else if (timeline == Timeline.week) {
+            return await this.orderService.getAmountByWeek(body);
+        } else if (timeline == Timeline.month) {
+            return await this.orderService.getAmountByMonth(body);
+        } else {
+            throw new BadRequestException('Invalid timeline');
+        }
     }
 }

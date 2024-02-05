@@ -4,17 +4,19 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createOrderDto } from 'src/dtos/createOrder.dto';
+import { UpdateOrderDto, createOrderDto } from 'src/dtos/order.dto';
 import { Item } from 'src/entity/item.entity';
 import { Order } from 'src/entity/order.entity';
 import { User } from 'src/entity/user.entity';
-import { Between, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { ItemService } from '../item/item.service';
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Order) private repo: Repository<Order>,
         @InjectRepository(Item) private itemRepo: Repository<Item>,
+        private itemService: ItemService,
     ) {}
 
     async createOrder(body: createOrderDto, user: User) {
@@ -49,7 +51,7 @@ export class OrderService {
         return order;
     }
 
-    async updateOrder(body: any, id: string) {
+    async updateOrder(body: UpdateOrderDto, id: string) {
         // const orderToUpdate = await this.repo.findOneBy({ id });
         const orderToUpdate = await this.repo
             .createQueryBuilder('order')
@@ -62,11 +64,17 @@ export class OrderService {
             body.quantity !== undefined
                 ? body.quantity
                 : orderToUpdate.quantity;
-        orderToUpdate.transactionDate =
-            body.transactionDate || orderToUpdate.transactionDate;
-        orderToUpdate.customer =
-            body.customer || orderToUpdate.customer;
-        orderToUpdate.item = body.item || orderToUpdate.item;
+        if (body.item) {
+            const item = await this.itemService.getItemById(
+                body.item,
+            );
+            if (!item)
+                throw new BadRequestException(
+                    "The given item doesn't exist",
+                );
+
+            orderToUpdate.item = item as Item;
+        }
 
         return await this.repo
             .createQueryBuilder()
@@ -84,6 +92,15 @@ export class OrderService {
     }
 
     async getAmountByDay(body: any) {
+        const currentDate = body.date;
+
+        if (
+            currentDate &&
+            !(currentDate instanceof Date) &&
+            isNaN(Date.parse(currentDate))
+        ) {
+            throw new BadRequestException('Invalid date format');
+        }
         const startOfDay = new Date(body.date);
         startOfDay.setUTCHours(0, 0, 0, 0);
 
