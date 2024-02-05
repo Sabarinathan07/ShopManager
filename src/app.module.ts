@@ -32,7 +32,7 @@ export class AppModule {
         //     .forRoutes('*');
         consumer
             .apply(AuthMiddleware)
-            .exclude('api/login', '/api/register')
+            .exclude('api/login', '/api/register', '/', '/api')
             .forRoutes('*');
     }
 }

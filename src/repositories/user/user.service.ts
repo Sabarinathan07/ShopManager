@@ -34,11 +34,15 @@ export class UserService {
     }
     async deleteUserById(id) {
         // console.log(id);
-        const user = await this.findById(id);
-        if (!user) {
-            throw new NotFoundException(
-                `User with ID "${id}" not found`,
-            );
+        try {
+            const user = await this.findById(id);
+            if (!user)
+                throw new NotFoundException(
+                    `User with ID "${id}" not found`,
+                );
+        } catch (error) {
+            console.log('User Id not found');
+            throw new NotFoundException(`User Id not found`);
         }
 
         return await this.repo
