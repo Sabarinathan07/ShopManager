@@ -37,9 +37,9 @@ export class isShopkeeperMiddleware implements NestMiddleware {
         }
         const JWT_SECRET = process.env.JWT_SECRET;
         const decoded = verify(token, JWT_SECRET);
-        console.log(decoded);
+        // console.log(decoded);
         req.currentUser = await this.userService.findById(decoded.id);
-        console.log(req.currentUser.user);
+        // console.log(req.currentUser.user);
 
         if (req.currentUser.role != Role.shopekeeper) {
             throw new ForbiddenException(

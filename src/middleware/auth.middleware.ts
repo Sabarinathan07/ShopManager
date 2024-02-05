@@ -1,32 +1,39 @@
-import { customRequest } from '../interfaces/request.interface';
+// import { customRequest } from '../interfaces/request.interface';
 import {
     Injectable,
     NestMiddleware,
+    Req,
     UnauthorizedException,
 } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
 import { UserService } from 'src/repositories/user/user.service';
 import { verify } from 'jsonwebtoken';
+import { User } from 'src/entity/user.entity';
+import { customRequest } from 'src/interfaces/request.interface';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Express {
-        interface customRequest extends Request {
-            currentUser?: any;
-        }
+        // interface Request {
+        //     currentUser?: User;
+        // }
     }
 }
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
     constructor(private userService: UserService) {}
+
     async use(req: customRequest, res: Response, next: NextFunction) {
         try {
-            if (!req.headers.authorization) {
-                throw new Error('No authorization header found');
-            }
+            // if (!req.headers.authorization) {
+            //     throw new Error('No authorization header found');
+            // }
+            // console.log(req.cookies);
+            // const { token1 } = req.body || {};
+            // console.log(token1);
 
-            const token = req.headers.authorization.split(' ')[1];
+            const token = req.cookies['token'];
 
             if (!token) {
                 throw new UnauthorizedException('Token not provided');
@@ -38,6 +45,7 @@ export class AuthMiddleware implements NestMiddleware {
             req.currentUser = await this.userService.findById(
                 decoded.id,
             );
+            // console.log('HIii hello');
             // console.log(req.currentUser);
 
             next();

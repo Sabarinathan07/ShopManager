@@ -7,9 +7,7 @@ import { ItemModule } from './repositories/item/item.module';
 import { UserModule } from './repositories/user/user.module';
 import { OrderModule } from './repositories/order/order.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const cookieSession = require('cookie-session');
+import { AuthModule } from './repositories/auth/auth/auth.module';
 
 @Module({
     imports: [
@@ -18,6 +16,7 @@ const cookieSession = require('cookie-session');
             envFilePath: `.env`,
         }),
         DbModule, // Use the DatabaseModule here
+        AuthModule,
         UserModule,
         ItemModule,
         OrderModule,
@@ -27,16 +26,13 @@ const cookieSession = require('cookie-session');
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
+        // consumer
+        //     .apply(AuthMiddleware)
+        //     .exclude('api/login', '/api/register')
+        //     .forRoutes('*');
         consumer
             .apply(AuthMiddleware)
             .exclude('api/login', '/api/register')
-            .forRoutes('*');
-        consumer
-            .apply(
-                cookieSession({
-                    keys: ['asdfasfd'],
-                }),
-            )
             .forRoutes('*');
     }
 }

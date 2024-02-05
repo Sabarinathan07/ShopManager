@@ -18,10 +18,10 @@ import { UserModule } from '../user/user.module';
     exports: [ItemService],
 })
 export class ItemModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer
-            .apply(isShopkeeperMiddleware)
-            .exclude({ path: 'api/item', method: RequestMethod.GET })
-            .forRoutes('api/item');
-    }
+    // configure(consumer: MiddlewareConsumer) {
+    //     consumer
+    //         .apply(isShopkeeperMiddleware)
+    //         .exclude({ path: 'api/item', method: RequestMethod.GET })
+    //         .forRoutes('api/item');
+    // }
 }
