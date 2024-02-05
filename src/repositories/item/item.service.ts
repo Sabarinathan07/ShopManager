@@ -49,7 +49,7 @@ export class ItemService {
         }
     }
 
-    async updateItem(id: string, body: Partial<UpdateItemDto>) {
+    async updateItem(id: string, body: UpdateItemDto) {
         // const itemToUpdate = await this.repo.findOneBy({ id });
         const itemToUpdate = await this.repo
             .createQueryBuilder('item')

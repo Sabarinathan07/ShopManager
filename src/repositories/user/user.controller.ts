@@ -9,7 +9,6 @@ export class UserController {
     @Get('/user')
     // @UseGuards(AuthGuard())
     async getUser(@Req() req: customRequest) {
-        // console.log(req.cookies);
         return req.currentUser;
     }
 
