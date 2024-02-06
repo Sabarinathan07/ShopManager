@@ -16,7 +16,9 @@ import { Timeline } from 'src/enums/Timeline';
 import { PartialTimeLineDto } from 'src/dtos/timeline.dto';
 import { TimelineInterceptor } from 'src/Interceptor/timeline.interceptor';
 
+
 @Controller('api/order')
+@UseInterceptors(TimelineInterceptor)
 export class OrderController {
     constructor(private orderService: OrderService) {}
 
@@ -38,7 +40,6 @@ export class OrderController {
         return await this.orderService.getAllOrders();
     }
 
-    @UseInterceptors(TimelineInterceptor)
     @Post('/:timeline')
     async getAmount(
         @Body() body: PartialTimeLineDto,
