@@ -5,24 +5,26 @@ import {
     HttpCode,
     Session,
     Res,
+    UseInterceptors,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dtos/createUser.dto';
+import { UserInterface } from 'src/interfaces/user.interface';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from 'src/dtos/loginUser.dto';
 import { Response } from 'express';
+import { UserInterceptor } from 'src/Interceptor/user.interceptor';
 
 @Controller('/api')
+@UseInterceptors(UserInterceptor)
 export class AuthController {
     constructor(private authService: AuthService) {}
     @Post('/register')
-    async createUser(@Body() body: CreateUserDto) {
+    async createUser(@Body() body: UserInterface) {
         return await this.authService.createUser(body);
     }
 
     @HttpCode(200)
     @Post('/login')
     async loginUser(
-        @Body() body: LoginUserDto,
+        @Body() body: UserInterface,
         @Res({ passthrough: true }) response: Response,
     ) {
         const res = await this.authService.login(body);

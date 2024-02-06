@@ -3,16 +3,15 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dtos/createUser.dto';
 import { User } from 'src/entity/user.entity';
 import { Role } from 'src/enums/Role';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LoginUserDto } from 'src/dtos/loginUser.dto';
 import { payload } from 'src/dtos/payload.dto';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
+import { UserInterface } from 'src/interfaces/user.interface';
 dotenv.config();
 
 @Injectable()
@@ -41,7 +40,7 @@ export class AuthService {
             .getOne();
         // return await this.repo.findOne({ where: { email } });
     }
-    async createUser(body: CreateUserDto) {
+    async createUser(body: UserInterface) {
         const users = await this.findByEmail(body.email);
         if (users) {
             throw new BadRequestException('email in use');
@@ -66,7 +65,7 @@ export class AuthService {
         // return this.repo.save(user);
     }
 
-    async login(body: LoginUserDto) {
+    async login(body: UserInterface) {
         const { email, password } = body;
         const user = await this.findByEmail(email);
 

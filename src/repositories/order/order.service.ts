@@ -4,12 +4,12 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateOrderDto, createOrderDto } from 'src/dtos/order.dto';
 import { Item } from 'src/entity/item.entity';
 import { Order } from 'src/entity/order.entity';
 import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 import { ItemService } from '../item/item.service';
+import { OrderInterface } from 'src/interfaces/order.interface';
 
 @Injectable()
 export class OrderService {
@@ -19,7 +19,7 @@ export class OrderService {
         private itemService: ItemService,
     ) {}
 
-    async createOrder(body: createOrderDto, user: User) {
+    async createOrder(body: OrderInterface, user: User) {
         const id = body.item;
         const itemDetails = await this.itemRepo.findOneBy({ id });
         if (!itemDetails)
@@ -40,18 +40,17 @@ export class OrderService {
         newOrder.amount = itemDetails.price * body.quantity;
 
         // const order = await this.repo.create(newOrder);
-        const order = await this.repo
+        await this.repo
             .createQueryBuilder()
             .insert()
             .into(Order)
             .values(newOrder)
             .execute();
 
-        console.log(order);
-        return order;
+        return newOrder;
     }
 
-    async updateOrder(body: UpdateOrderDto, id: string) {
+    async updateOrder(body: OrderInterface, id: string) {
         // const orderToUpdate = await this.repo.findOneBy({ id });
         const orderToUpdate = await this.repo
             .createQueryBuilder('order')
@@ -59,7 +58,6 @@ export class OrderService {
             .getOne();
         if (!orderToUpdate)
             throw new NotFoundException('No such order');
-
         orderToUpdate.quantity =
             body.quantity !== undefined
                 ? body.quantity
@@ -76,12 +74,14 @@ export class OrderService {
             orderToUpdate.item = item as Item;
         }
 
-        return await this.repo
+        await this.repo
             .createQueryBuilder()
             .update(Order)
             .set(orderToUpdate)
             .where('id = :id', { id })
             .execute();
+
+        return orderToUpdate;
         // return this.repo.save(orderToUpdate);
     }
 

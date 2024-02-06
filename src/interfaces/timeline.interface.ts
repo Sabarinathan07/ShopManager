@@ -1,6 +1,6 @@
-export interface TimelineI {
-    date: string;
-    month: number;
-    week: number;
-    year: number;
+export interface TimelineInterface {
+    date?: string;
+    month?: number;
+    week?: number;
+    year?: number;
 }

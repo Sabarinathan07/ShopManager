@@ -41,7 +41,7 @@ export class isShopkeeperMiddleware implements NestMiddleware {
         req.currentUser = await this.userService.findById(decoded.id);
         // console.log(req.currentUser.user);
 
-        if (req.currentUser.role != Role.shopekeeper) {
+        if (req.currentUser.role != Role.shopkeeper) {
             throw new ForbiddenException(
                 'Access denied! Shopkeeper Only!',
             );

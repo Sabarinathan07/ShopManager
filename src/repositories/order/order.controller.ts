@@ -1,4 +1,4 @@
-import { TimelineI } from '../../interfaces/timeline.interface';
+import { TimelineInterface } from '../../interfaces/timeline.interface';
 import {
     BadRequestException,
     Body,
@@ -11,19 +11,17 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { createOrderDto } from 'src/dtos/order.dto';
 import { Timeline } from 'src/enums/Timeline';
-import { PartialTimeLineDto } from 'src/dtos/timeline.dto';
-import { TimelineInterceptor } from 'src/Interceptor/timeline.interceptor';
-
+import { OrderInterceptor } from 'src/Interceptor/order.interceptor';
+import { OrderInterface } from 'src/interfaces/order.interface';
 
 @Controller('api/order')
-@UseInterceptors(TimelineInterceptor)
+@UseInterceptors(OrderInterceptor)
 export class OrderController {
     constructor(private orderService: OrderService) {}
 
     @Post()
-    async createOrder(@Body() body: createOrderDto, @Req() req) {
+    async createOrder(@Body() body: OrderInterface, @Req() req) {
         return await this.orderService.createOrder(
             body,
             req.currentUser,
@@ -42,7 +40,7 @@ export class OrderController {
 
     @Post('/:timeline')
     async getAmount(
-        @Body() body: PartialTimeLineDto,
+        @Body() body: TimelineInterface,
         @Param('timeline') timeline: Timeline,
     ) {
         if (timeline == Timeline.day) {

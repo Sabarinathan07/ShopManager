@@ -1,4 +1,3 @@
-import { CreateItemDto } from 'src/dtos/item.dto';
 import { ItemService } from './item.service';
 import {
     Body,
@@ -8,17 +7,20 @@ import {
     Post,
     Put,
     Req,
+    UseInterceptors,
 } from '@nestjs/common';
 import { customRequest } from 'src/interfaces/request.interface';
-import { UpdateItemDto } from 'src/dtos/item.dto';
+import { ItemInterface } from 'src/interfaces/item.interface';
+import { ItemInterceptor } from 'src/Interceptor/item.interceptor';
 
 @Controller('/api/item')
+@UseInterceptors(ItemInterceptor)
 export class ItemController {
     constructor(private itemService: ItemService) {}
 
     @Post()
     async createItem(
-        @Body() body: CreateItemDto,
+        @Body() body: ItemInterface,
         @Req() req: customRequest,
     ) {
         return await this.itemService.createItem(req, body);
@@ -37,7 +39,7 @@ export class ItemController {
     @Put('/:id')
     async updateItem(
         @Param('id') id: string,
-        @Body() body: UpdateItemDto,
+        @Body() body: ItemInterface,
     ) {
         return await this.itemService.updateItem(id, body);
     }

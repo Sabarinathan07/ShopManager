@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateItemDto } from 'src/dtos/item.dto';
-import { UpdateItemDto } from 'src/dtos/item.dto';
+
 import { Item } from 'src/entity/item.entity';
+import { ItemInterface } from 'src/interfaces/item.interface';
 import { customRequest } from 'src/interfaces/request.interface';
 import { Repository } from 'typeorm';
 
@@ -11,7 +11,7 @@ export class ItemService {
     constructor(
         @InjectRepository(Item) private repo: Repository<Item>,
     ) {}
-    async createItem(req: customRequest, body: CreateItemDto) {
+    async createItem(req: customRequest, body: ItemInterface) {
         const newItem = new Item();
         newItem.name = body.name;
         newItem.shopkeeper = req.currentUser.id;
@@ -49,7 +49,7 @@ export class ItemService {
         }
     }
 
-    async updateItem(id: string, body: UpdateItemDto) {
+    async updateItem(id: string, body: ItemInterface) {
         // const itemToUpdate = await this.repo.findOneBy({ id });
         const itemToUpdate = await this.repo
             .createQueryBuilder('item')
@@ -66,13 +66,14 @@ export class ItemService {
         newItem.orders = itemToUpdate.orders;
         newItem.shopkeeper = itemToUpdate.shopkeeper;
 
-        return await this.repo
+        await this.repo
             .createQueryBuilder()
             .update(Item)
             .set(itemToUpdate)
             .where('id= :id', { id })
             .execute();
 
+        return newItem;
         // return await this.repo.save(newItem);
     }
 
@@ -86,12 +87,14 @@ export class ItemService {
             throw new NotFoundException('Item not found');
 
         itemToUpdate.quantity = 0;
-        return await this.repo
+        await this.repo
             .createQueryBuilder()
             .update(Item)
             .set(itemToUpdate)
             .where('id= :id', { id })
             .execute();
+
+        return itemToUpdate;
         // return await this.repo.save(itemToUpdate);
     }
 }

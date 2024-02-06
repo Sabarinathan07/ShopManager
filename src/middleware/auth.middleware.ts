@@ -30,8 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
             //     throw new Error('No authorization header found');
             // }
             // console.log(req.cookies);
-            // const { token1 } = req.body || {};
-            // console.log(token1);
+            // const { token } = req.body || {};
 
             const token = req.cookies['token'];
 
