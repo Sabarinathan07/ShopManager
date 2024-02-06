@@ -6,16 +6,16 @@ import {
 } from '@nestjs/common';
 import { Role } from 'src/enums/Role';
 
-export class ShopkeeperGuard implements CanActivate {
+export class CustomerGuard implements CanActivate {
     canActivate(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
         if (!request.currentUser) {
             throw new UnauthorizedException('You are not logged in');
         }
 
-        if (request.currentUser.role == Role.shopkeeper) {
+        if (request.currentUser.role == Role.customer) {
             return true;
         }
-        throw new ForbiddenException('Only shopkeeper can Access!');
+        throw new ForbiddenException('Only customer can Access!');
     }
 }

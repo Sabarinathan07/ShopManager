@@ -8,12 +8,14 @@ import {
     Post,
     Put,
     Req,
+    UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Timeline } from 'src/enums/Timeline';
 import { OrderInterceptor } from 'src/Interceptor/order.interceptor';
 import { OrderInterface } from 'src/interfaces/order.interface';
+import { CustomerGuard } from 'src/guards/CustomerGuard';
 
 @Controller('api/order')
 @UseInterceptors(OrderInterceptor)
@@ -21,6 +23,7 @@ export class OrderController {
     constructor(private orderService: OrderService) {}
 
     @Post()
+    @UseGuards(CustomerGuard)
     async createOrder(@Body() body: OrderInterface, @Req() req) {
         return await this.orderService.createOrder(
             body,

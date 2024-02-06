@@ -7,11 +7,13 @@ import {
     Post,
     Put,
     Req,
+    UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { customRequest } from 'src/interfaces/request.interface';
 import { ItemInterface } from 'src/interfaces/item.interface';
 import { ItemInterceptor } from 'src/Interceptor/item.interceptor';
+import { ShopkeeperGuard } from 'src/guards/ShopkeeperGuard';
 
 @Controller('/api/item')
 @UseInterceptors(ItemInterceptor)
@@ -19,6 +21,7 @@ export class ItemController {
     constructor(private itemService: ItemService) {}
 
     @Post()
+    @UseGuards(ShopkeeperGuard)
     async createItem(
         @Body() body: ItemInterface,
         @Req() req: customRequest,
@@ -37,6 +40,7 @@ export class ItemController {
     }
 
     @Put('/:id')
+    @UseGuards(ShopkeeperGuard)
     async updateItem(
         @Param('id') id: string,
         @Body() body: ItemInterface,
@@ -45,6 +49,7 @@ export class ItemController {
     }
 
     @Put('/delete/:id')
+    @UseGuards(ShopkeeperGuard)
     async deleteItemQuantity(@Param('id') id: string) {
         return await this.itemService.deleteItemQuantity(id);
     }
