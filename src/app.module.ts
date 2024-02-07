@@ -7,7 +7,7 @@ import { ItemModule } from './repositories/item/item.module';
 import { UserModule } from './repositories/user/user.module';
 import { OrderModule } from './repositories/order/order.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
-import { AuthModule } from './repositories/auth/auth/auth.module';
+import { AuthModule } from './repositories/auth/auth.module';
 
 @Module({
     imports: [
