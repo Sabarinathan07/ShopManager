@@ -3,7 +3,6 @@ import {
     Controller,
     Post,
     HttpCode,
-    Session,
     Res,
     UseInterceptors,
 } from '@nestjs/common';
