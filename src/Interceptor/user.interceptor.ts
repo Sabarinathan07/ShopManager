@@ -27,6 +27,10 @@ export class UserInterceptor implements NestInterceptor {
             errors = userValidator.validateLoginUser(req);
         }
 
+        if (handler === 'logoutUser') {
+            errors = [];
+        }
+
         if (errors.length > 0) {
             throw new BadRequestException(errors);
         }
