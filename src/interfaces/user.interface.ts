@@ -2,12 +2,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Role } from 'src/enums/Role';
 
 export class UserInterface {
+    id: string;
     @ApiProperty()
     email: string;
     @ApiPropertyOptional()
     name?: string;
     @ApiProperty()
-    password: string;
+    password?: string;
     @ApiPropertyOptional()
     role?: Role;
+    token?: string;
 }

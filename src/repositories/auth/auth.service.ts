@@ -40,6 +40,13 @@ export class AuthService {
             .getOne();
         // return await this.repo.findOne({ where: { email } });
     }
+
+    async findById(id: string) {
+        return await this.repo
+            .createQueryBuilder('user')
+            .where('user.id = :id', { id })
+            .getOne();
+    }
     async createUser(body: UserInterface) {
         const users = await this.findByEmail(body.email);
         if (users) {
@@ -52,14 +59,18 @@ export class AuthService {
         newUser.password = hashPass;
         newUser.role = body.role as Role;
 
-        const user = this.repo
+        const res = await this.repo
             .createQueryBuilder()
             .insert()
             .into(User)
             .values(newUser)
             .execute();
 
-        return user;
+        const id = res.raw[0].id;
+        const token = await this.generateToken({ id: id });
+        const user = await this.findById(id);
+
+        return this.DbObjectToUser(user, token);
 
         // const user = this.repo.create(newUser);
         // return this.repo.save(user);
@@ -79,6 +90,12 @@ export class AuthService {
 
         const id = user.id;
         const token = await this.generateToken({ id: id });
-        return { user, token };
+        // return { user, token };
+        return this.DbObjectToUser(user, token);
+    }
+
+    DbObjectToUser(user: User, token: string): UserInterface {
+        const { id, name, email, role } = user;
+        return { id, name, email, role, token };
     }
 }

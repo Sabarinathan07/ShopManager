@@ -28,7 +28,6 @@ export class AuthController {
     ) {
         const res = await this.authService.login(body);
         response.cookie('token', res.token);
-
         // session.userId = res.token;
         return res;
     }
