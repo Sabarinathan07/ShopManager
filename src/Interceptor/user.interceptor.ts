@@ -17,7 +17,7 @@ export class UserInterceptor implements NestInterceptor {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
         const userValidator = new UserValidator();
-        let errors: string[];
+        let errors: string[] = [];
 
         if (handler === 'createUser') {
             errors = userValidator.validateCreateUser(req);

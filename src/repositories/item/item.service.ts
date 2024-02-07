@@ -19,14 +19,14 @@ export class ItemService {
         newItem.price = body.price;
         newItem.orders = [];
 
-        const item = await this.repo
+        await this.repo
             .createQueryBuilder()
             .insert()
             .into(Item)
             .values(newItem)
             .execute();
 
-        return item;
+        return newItem;
 
         // const item = this.repo.create(newItem);
         // return await this.repo.save(item);

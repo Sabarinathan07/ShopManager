@@ -17,7 +17,7 @@ export class ItemInterceptor implements NestInterceptor {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
         const itemValidator = new ItemValidator();
-        let errors: string[];
+        let errors: string[] = [];
 
         if (handler === 'createItem') {
             errors = itemValidator.validateCreateItem(req);

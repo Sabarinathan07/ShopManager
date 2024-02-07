@@ -42,7 +42,7 @@ export class OrderValidator {
         if (req.params.timeline == Timeline.day) {
             const { date } = req.body;
 
-            if (date) {
+            if (!date) {
                 errors.push('Date is required');
             }
         } else if (req.params.timeline == Timeline.week) {
@@ -74,7 +74,7 @@ export class OrderValidator {
 
             if (!year) {
                 errors.push('Year is required');
-            } else if (year < 2000 && year > 2050) {
+            } else if (year < 2000 || year > 2050) {
                 errors.push(
                     'Invalid Year, Please enter a valid year from 2000 to 2050',
                 );
