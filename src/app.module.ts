@@ -15,7 +15,7 @@ import { AuthModule } from './repositories/auth/auth/auth.module';
             isGlobal: true,
             envFilePath: `.env`,
         }),
-        DbModule, // Use the DatabaseModule here
+        DbModule,
         AuthModule,
         UserModule,
         ItemModule,
@@ -26,10 +26,6 @@ import { AuthModule } from './repositories/auth/auth/auth.module';
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
-        // consumer
-        //     .apply(AuthMiddleware)
-        //     .exclude('api/login', '/api/register')
-        //     .forRoutes('*');
         consumer
             .apply(AuthMiddleware)
             .exclude('api/login', '/api/register', '/', '/api')
