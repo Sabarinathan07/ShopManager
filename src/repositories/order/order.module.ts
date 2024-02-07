@@ -6,10 +6,11 @@ import { ConfigModule } from '@nestjs/config';
 import { Order } from 'src/entity/order.entity';
 import { Item } from 'src/entity/item.entity';
 import { ItemService } from '../item/item.service';
+import { OrderValidator } from 'src/helpers/order.validator';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Order, Item]), ConfigModule],
     controllers: [OrderController],
-    providers: [OrderService, ItemService],
+    providers: [OrderService, ItemService, OrderValidator],
 })
 export class OrderModule {}

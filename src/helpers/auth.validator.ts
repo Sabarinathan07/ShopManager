@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Role } from 'src/enums/Role';
 
-export class UserValidator {
+export class AuthValidator {
     validateCreateUser(req: Request): string[] {
         const { name, email, password, role } = req.body;
         const errors: string[] = [];

@@ -10,21 +10,22 @@ import { ItemValidator } from 'src/helpers/item.validator';
 
 @Injectable()
 export class ItemInterceptor implements NestInterceptor {
+    constructor(private itemValidator: ItemValidator) {}
     intercept(
         context: ExecutionContext,
         next: CallHandler,
     ): Observable<any> {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
-        const itemValidator = new ItemValidator();
+        // const itemValidator = new ItemValidator();
         let errors: string[] = [];
 
         if (handler === 'createItem') {
-            errors = itemValidator.validateCreateItem(req);
+            errors = this.itemValidator.validateCreateItem(req);
         }
 
         if (handler === 'updateItem') {
-            errors = itemValidator.validateUpdateItem(req);
+            errors = this.itemValidator.validateUpdateItem(req);
         }
         if (errors.length > 0) {
             throw new BadRequestException(errors);

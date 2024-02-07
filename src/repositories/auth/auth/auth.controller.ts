@@ -9,10 +9,10 @@ import {
 import { UserInterface } from 'src/interfaces/user.interface';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { UserInterceptor } from 'src/Interceptor/user.interceptor';
+import { AuthInterceptor } from 'src/Interceptor/auth.interceptor';
 
 @Controller('/api')
-@UseInterceptors(UserInterceptor)
+@UseInterceptors(AuthInterceptor)
 export class AuthController {
     constructor(private authService: AuthService) {}
     @Post('/register')

@@ -4,9 +4,7 @@ import {
     ExecutionContext,
     CallHandler,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { UserValidator } from 'src/helpers/user.validator';
-import { BadRequestException } from '@nestjs/common';
+import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class UserInterceptor implements NestInterceptor {
@@ -14,26 +12,15 @@ export class UserInterceptor implements NestInterceptor {
         context: ExecutionContext,
         next: CallHandler,
     ): Observable<any> {
-        const req = context.switchToHttp().getRequest();
-        const handler = context.getHandler().name;
-        const userValidator = new UserValidator();
-        let errors: string[] = [];
+        // Logic to be executed before the request is handled by the controller
+        console.log('Before request');
 
-        if (handler === 'createUser') {
-            errors = userValidator.validateCreateUser(req);
-        }
+        const request = context.switchToHttp().getRequest();
+        // Access the user information from the request object and perform any necessary operations
 
-        if (handler === 'loginUser') {
-            errors = userValidator.validateLoginUser(req);
-        }
-
-        if (handler === 'logoutUser') {
-            errors = [];
-        }
-
-        if (errors.length > 0) {
-            throw new BadRequestException(errors);
-        }
-        return next.handle();
+        return next.handle().pipe(
+            // Logic to be executed after the request is handled by the controller
+            tap(() => console.log('After request')),
+        );
     }
 }

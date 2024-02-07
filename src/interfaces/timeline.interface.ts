@@ -1,4 +1,4 @@
-export interface TimelineInterface {
+export class TimelineInterface {
     date?: string;
     month?: number;
     week?: number;
