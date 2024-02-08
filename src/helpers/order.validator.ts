@@ -84,6 +84,4 @@ export class OrderValidator {
 
         return errors;
     }
-
-  
 }
