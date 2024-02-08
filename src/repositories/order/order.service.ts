@@ -39,7 +39,6 @@ export class OrderService {
         newOrder.item = itemDetails as Item;
         newOrder.amount = itemDetails.price * body.quantity;
 
-        // const order = await this.repo.create(newOrder);
         await this.repo
             .createQueryBuilder()
             .insert()
@@ -51,7 +50,6 @@ export class OrderService {
     }
 
     async updateOrder(body: OrderInterface, id: string) {
-        // const orderToUpdate = await this.repo.findOneBy({ id });
         const orderToUpdate = await this.repo
             .createQueryBuilder('order')
             .where('order.id = :id', { id })
@@ -82,12 +80,9 @@ export class OrderService {
             .execute();
 
         return orderToUpdate;
-        // return this.repo.save(orderToUpdate);
     }
 
     async getAllOrders() {
-        // return await this.repo.find();
-
         return await this.repo.createQueryBuilder('order').getMany();
     }
 
@@ -106,12 +101,6 @@ export class OrderService {
 
         const endOfDay = new Date(body.date);
         endOfDay.setUTCHours(23, 59, 59, 999);
-
-        // const orders = await this.repo.find({
-        //     where: {
-        //         transactionDate: Between(startOfDay, endOfDay),
-        //     },
-        // });
 
         const orders = await this.repo
             .createQueryBuilder('order')
@@ -137,11 +126,6 @@ export class OrderService {
         const endOfWeek = new Date(
             Date.UTC(body.year, 0, body.week * 7, 23, 59, 59, 999),
         );
-        // const orders = await this.repo.find({
-        //     where: {
-        //         transactionDate: Between(startOfWeek, endOfWeek),
-        //     },
-        // });
 
         const orders = await this.repo
             .createQueryBuilder('order')
@@ -167,12 +151,6 @@ export class OrderService {
         const endOfMonth = new Date(
             Date.UTC(body.year, body.month, 0, 23, 59, 59, 999),
         );
-
-        // const orders = await this.repo.find({
-        //     where: {
-        //         transactionDate: Between(startOfMonth, endOfMonth),
-        //     },
-        // });
 
         const orders = await this.repo
             .createQueryBuilder('order')

@@ -39,7 +39,6 @@ export class AuthService {
             .createQueryBuilder('user')
             .where('user.email = :email', { email })
             .getOne();
-        // return await this.repo.findOne({ where: { email } });
     }
 
     async findById(id: string) {
@@ -73,9 +72,6 @@ export class AuthService {
         const user = await this.findById(id);
 
         return this.dbObjectToUser(user);
-
-        // const user = this.repo.create(newUser);
-        // return this.repo.save(user);
     }
 
     async login(body: UserInterface, response: Response) {
@@ -94,8 +90,6 @@ export class AuthService {
         const token = await this.generateToken({ id: id });
         console.log(token);
         response.cookie('token', token);
-
-        // return { user, token };
         return this.dbObjectToUser(user);
     }
 

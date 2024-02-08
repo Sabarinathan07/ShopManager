@@ -5,7 +5,6 @@ import { Item } from 'src/entity/item.entity';
 import { ItemInterface } from 'src/interfaces/item.interface';
 import { customRequest } from 'src/interfaces/request.interface';
 import { Repository } from 'typeorm';
-import { UserService } from '../user/user.service';
 import { UserInterface } from 'src/interfaces/user.interface';
 import { User } from 'src/entity/user.entity';
 
@@ -30,13 +29,8 @@ export class ItemService {
             .execute();
 
         return this.dbObjectToItem(newItem);
-
-        // const item = this.repo.create(newItem);
-        // return await this.repo.save(item);
     }
     async getAllItems() {
-        // return await this.repo.find();
-
         const items = await this.repo
             .createQueryBuilder('item')
             .leftJoinAndSelect('item.shopkeeper', 'user.id')
@@ -46,7 +40,6 @@ export class ItemService {
 
     async getItemById(id: string) {
         try {
-            // const found = await this.repo.findOneBy({ id });
             const found = await this.repo
                 .createQueryBuilder('item')
                 .leftJoinAndSelect('item.shopkeeper', 'user.id')
@@ -59,7 +52,6 @@ export class ItemService {
     }
 
     async updateItem(id: string, body: ItemInterface) {
-        // const itemToUpdate = await this.repo.findOneBy({ id });
         const itemToUpdate = await this.repo
             .createQueryBuilder('item')
             .leftJoinAndSelect('item.shopkeeper', 'user.id')
@@ -84,11 +76,9 @@ export class ItemService {
             .execute();
 
         return this.dbObjectToItem(newItem);
-        // return await this.repo.save(newItem);
     }
 
     async deleteItemQuantity(id: string) {
-        // const itemToUpdate = await this.repo.findOneBy({ id });
         const itemToUpdate = await this.repo
             .createQueryBuilder('item')
             .leftJoinAndSelect('item.shopkeeper', 'user.id')
@@ -106,7 +96,6 @@ export class ItemService {
             .execute();
 
         return this.dbObjectToItem(itemToUpdate);
-        // return await this.repo.save(itemToUpdate);
     }
 
     private mapItemsResponse(items: Item[]) {

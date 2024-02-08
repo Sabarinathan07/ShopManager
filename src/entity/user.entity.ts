@@ -1,4 +1,3 @@
-// Import necessary modules from TypeORM
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -8,7 +7,6 @@ import {
 import { Order } from './order.entity';
 import { Role } from '../enums/Role';
 
-// Define User entity
 @Entity()
 export class User {
     @PrimaryGeneratedColumn('uuid')
@@ -32,7 +30,6 @@ export class User {
     })
     date: Date;
 
-    // Define relationships
     @OneToMany(() => Order, (order) => order.customer)
     orders: Order[];
 }

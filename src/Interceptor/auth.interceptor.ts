@@ -18,7 +18,6 @@ export class AuthInterceptor implements NestInterceptor {
     ): Observable<any> {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
-        // const authValidator = new authValidator();
         let errors: string[] = [];
 
         if (handler === 'createUser') {

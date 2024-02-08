@@ -8,7 +8,6 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Get('/user')
-    // @UseGuards(AuthGuard())
     async getUser(@Req() req: customRequest) {
         // console.log(req.cookies);
         return this.userService.getCurrentUser(req);

@@ -17,7 +17,6 @@ export class OrderInterceptor implements NestInterceptor {
     ): Observable<any> {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
-        // const orderValidator = new OrderValidator();
         let errors: string[] = [];
 
         if (handler === 'createOrder') {

@@ -22,7 +22,6 @@ export class UserService {
             .where('user.email = :email', { email })
             .getOne();
         return user;
-        // return await this.repo.findOne({ where: { email } });
     }
 
     async findById(id: string) {
@@ -30,39 +29,19 @@ export class UserService {
             .createQueryBuilder('user')
             .where('user.id = :id', { id })
             .getOne();
-        // console.log('hi from user');
-        // console.log(user);
         return user;
-        // return await this.repo.findOne({ where: { id } });
     }
     async getCurrentUser(req: customRequest) {
         return this.dbObjectToUser(req.currentUser);
     }
 
     async getAllUsers() {
-        // const ordersC = await this.cacheManager.get('userc');
-        // if (ordersC) {
-        //     return ordersC;
-        // }
-        // console.log(ordersC);
-
         const users = await this.repo
             .createQueryBuilder('user')
             .getMany();
-
-        // await this.cacheManager.set(
-        //     'usersc',
-        //     JSON.stringify(users),
-        //     0,
-        // );
-
-        // const mappedUsers = users.map((user) =>
-        //     this.dbObjectToUser(user),
-        // );
         return this.mapUsers(users);
     }
     async deleteUserById(id) {
-        // console.log(id);
         try {
             const user = await this.findById(id);
             if (!user)
@@ -86,7 +65,6 @@ export class UserService {
             throw new InternalServerErrorException(
                 'Failed to delete User',
             );
-        // return await this.repo.delete(id);
     }
 
     private mapUsers(users: User[]) {
