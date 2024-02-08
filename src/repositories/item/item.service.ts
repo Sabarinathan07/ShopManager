@@ -1,15 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Item } from 'src/entity/item.entity';
 import { ItemInterface } from 'src/interfaces/item.interface';
 import { customRequest } from 'src/interfaces/request.interface';
 import { Repository } from 'typeorm';
+// import { CACHE_MANAGER } from '@nestjs/cache-manager';
+// import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ItemService {
     constructor(
         @InjectRepository(Item) private repo: Repository<Item>,
+        // @Inject(CACHE_MANAGER) private cacheManager: Cache,
     ) {}
     async createItem(req: customRequest, body: ItemInterface) {
         const newItem = new Item();
@@ -25,6 +32,12 @@ export class ItemService {
             .into(Item)
             .values(newItem)
             .execute();
+        // const items = await this.repo
+        //     .createQueryBuilder('item')
+        //     .getMany();
+        // // console.log(items);
+        // await this.cacheManager.del('itemC');
+        // await this.cacheManager.set('itemC', items);
 
         return newItem;
 
@@ -33,7 +46,13 @@ export class ItemService {
     }
     async getAllItems() {
         // return await this.repo.find();
-        return await this.repo.createQueryBuilder('item').getMany();
+        const items = await this.repo
+            .createQueryBuilder('item')
+            .getMany();
+        // console.log(items);
+        // await this.cacheManager.get('itemC');
+        // await this.cacheManager.set('itemC', items);
+        return items;
     }
 
     async getItemById(id: string) {
@@ -72,6 +91,11 @@ export class ItemService {
             .set(itemToUpdate)
             .where('id= :id', { id })
             .execute();
+
+        // const items = await this.repo
+        //     .createQueryBuilder('item')
+        //     .getMany();
+        // await this.cacheManager.set('itemC', items);
 
         return newItem;
         // return await this.repo.save(newItem);

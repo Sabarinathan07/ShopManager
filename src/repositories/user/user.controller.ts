@@ -1,16 +1,40 @@
-import { Controller, Delete, Get, Param, Req } from '@nestjs/common';
+import {
+    Controller,
+    Delete,
+    Get,
+    Inject,
+    Param,
+    Req,
+    UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { customRequest } from 'src/interfaces/request.interface';
+import {
+    CACHE_MANAGER,
+    CacheInterceptor,
+    CacheKey,
+    CacheTTL,
+} from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Controller('/api')
+@UseInterceptors(CacheInterceptor)
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(
+        private userService: UserService,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    ) {}
 
     @Get('/user')
-    // @UseGuards(AuthGuard())
     async getUser(@Req() req: customRequest) {
-        // console.log(req.cookies);
         return req.currentUser;
+    }
+
+    @CacheKey('custom_key')
+    @CacheTTL(20)
+    @Get('/all-users')
+    async getAllUsers() {
+        return await this.userService.getAllUsers();
     }
 
     @Delete('/:id')

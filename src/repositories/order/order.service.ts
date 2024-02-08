@@ -1,5 +1,6 @@
 import {
     BadRequestException,
+    Inject,
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
@@ -10,12 +11,15 @@ import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 import { ItemService } from '../item/item.service';
 import { OrderInterface } from 'src/interfaces/order.interface';
+// import { CACHE_MANAGER } from '@nestjs/cache-manager';
+// import { Cache } from 'cache-manager';
 
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Order) private repo: Repository<Order>,
         @InjectRepository(Item) private itemRepo: Repository<Item>,
+        // @Inject(CACHE_MANAGER) private cacheManager: Cache,
         private itemService: ItemService,
     ) {}
 
@@ -46,6 +50,9 @@ export class OrderService {
             .into(Order)
             .values(newOrder)
             .execute();
+// const keys = await this.cacheManager.keys();
+
+        // await this.cacheManager.del('orderc');
 
         return newOrder;
     }
@@ -81,6 +88,8 @@ export class OrderService {
             .where('id = :id', { id })
             .execute();
 
+        // await this.cacheManager.del('orderc');
+
         return orderToUpdate;
         // return this.repo.save(orderToUpdate);
     }
@@ -88,7 +97,21 @@ export class OrderService {
     async getAllOrders() {
         // return await this.repo.find();
 
-        return await this.repo.createQueryBuilder('order').getMany();
+        // const orderc1 = await this.cacheManager.get('orderc');
+
+        // console.log(orderc1);
+        // console.log('====================================');
+        // console.log();
+        // console.log('====================================');
+        const orders = await this.repo
+            .createQueryBuilder('order')
+            .getMany();
+        // await this.cacheManager.set('orderc', orders);
+        // const orderc = await this.cacheManager.get('orderc');
+        // console.log(orderc);
+        // if (orderc) return orderc; //  ? Set data in the cache
+
+        return orders;
     }
 
     async getAmountByDay(body: any) {

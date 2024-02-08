@@ -14,9 +14,16 @@ import { customRequest } from 'src/interfaces/request.interface';
 import { ItemInterface } from 'src/interfaces/item.interface';
 import { ItemInterceptor } from 'src/Interceptor/item.interceptor';
 import { ShopkeeperGuard } from 'src/guards/ShopkeeperGuard';
+// import {
+//     CacheInterceptor,
+//     CacheKey,
+//     CacheTTL,
+// } from '@nestjs/cache-manager';
+
 
 @Controller('/api/item')
-@UseInterceptors(ItemInterceptor)
+// @CacheKey('custom_key')
+// @UseInterceptors(ItemInterceptor, CacheInterceptor)
 export class ItemController {
     constructor(private itemService: ItemService) {}
 

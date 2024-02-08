@@ -70,7 +70,7 @@ export class AuthService {
         const token = await this.generateToken({ id: id });
         const user = await this.findById(id);
 
-        return this.DbObjectToUser(user, token);
+        return this.dbObjectToUser(user, token);
 
         // const user = this.repo.create(newUser);
         // return this.repo.save(user);
@@ -91,11 +91,11 @@ export class AuthService {
         const id = user.id;
         const token = await this.generateToken({ id: id });
         // return { user, token };
-        return this.DbObjectToUser(user, token);
+        return this.dbObjectToUser(user, token);
     }
 
-    DbObjectToUser(user: User, token: string): UserInterface {
+    private dbObjectToUser(user: User, token: string): UserInterface {
         const { id, name, email, role } = user;
-        return { id, name, email, role, token };
+        return <UserInterface>{ id, name, email, role, token };
     }
 }

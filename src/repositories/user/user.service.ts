@@ -1,16 +1,19 @@
 import {
-    BadRequestException,
+    Inject,
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
 import { User } from 'src/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private repo: Repository<User>,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache,
     ) {}
 
     async findByEmail(email: string) {
@@ -27,13 +30,31 @@ export class UserService {
             .createQueryBuilder('user')
             .where('user.id = :id', { id })
             .getOne();
-        // console.log('hi from user');
-        // console.log(user);
         return user;
         // return await this.repo.findOne({ where: { id } });
     }
+
+    async getAllUsers() {
+        const ordersC = await this.cacheManager.get('userc');
+        if (ordersC) {
+            return ordersC;
+        }
+        console.log(ordersC);
+
+        const users = await this.repo
+            .createQueryBuilder('user')
+            .getMany();
+
+        await this.cacheManager.set(
+            'usersc',
+            JSON.stringify(users),
+            0,
+        );
+
+        return users;
+    }
+
     async deleteUserById(id) {
-        // console.log(id);
         try {
             const user = await this.findById(id);
             if (!user)
