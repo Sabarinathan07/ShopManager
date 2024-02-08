@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { Role } from 'src/enums/Role';
+import { GeneralValidators } from './general.validators';
 
 export class AuthValidator {
     validateCreateUser(req: Request): string[] {
@@ -14,7 +15,7 @@ export class AuthValidator {
 
         if (!email) {
             errors.push('Email is required');
-        } else if (!this.isValidEmail(email)) {
+        } else if (!GeneralValidators.isValidEmail(email)) {
             errors.push('Invalid email format');
         }
 
@@ -41,7 +42,7 @@ export class AuthValidator {
 
         if (!email) {
             errors.push('Email is required');
-        } else if (!this.isValidEmail(email)) {
+        } else if (!GeneralValidators.isValidEmail(email)) {
             errors.push('Invalid email format');
         }
 
@@ -53,10 +54,5 @@ export class AuthValidator {
             );
         }
         return errors;
-    }
-
-    private isValidEmail(email: string): boolean {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
     }
 }

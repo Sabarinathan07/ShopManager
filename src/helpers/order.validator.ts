@@ -1,5 +1,6 @@
 import { Timeline } from 'src/enums/Timeline';
 import { Request } from 'express';
+import { GeneralValidators } from './general.validators';
 
 export class OrderValidator {
     validateCreateOrder(req: Request) {
@@ -8,7 +9,7 @@ export class OrderValidator {
 
         if (!item) {
             errors.push('Item is required');
-        } else if (!this.isValidUUID(item)) {
+        } else if (!GeneralValidators.isValidUUID(item)) {
             errors.push('Item should be valid UUID');
         }
 
@@ -84,9 +85,5 @@ export class OrderValidator {
         return errors;
     }
 
-    private isValidUUID(uuid: string): boolean {
-        const uuidRegex =
-            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        return uuidRegex.test(uuid);
-    }
+  
 }

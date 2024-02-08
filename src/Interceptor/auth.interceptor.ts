@@ -3,10 +3,10 @@ import {
     NestInterceptor,
     ExecutionContext,
     CallHandler,
+    BadRequestException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AuthValidator } from 'src/helpers/auth.validator';
-import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class AuthInterceptor implements NestInterceptor {
@@ -31,6 +31,11 @@ export class AuthInterceptor implements NestInterceptor {
         if (errors.length > 0) {
             throw new BadRequestException(errors);
         }
-        return next.handle();
+        return next
+            .handle()
+            .pipe
+            // Logic to be executed after the request is handled by the controller
+            // tap(() => console.log('After handling the request')),
+            ();
     }
 }

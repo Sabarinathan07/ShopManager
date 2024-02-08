@@ -41,17 +41,19 @@ export class UserService {
             .getMany();
         return this.mapUsers(users);
     }
-    async deleteUserById(id) {
-        try {
-            const user = await this.findById(id);
-            if (!user)
-                throw new NotFoundException(
-                    `User with ID "${id}" not found`,
-                );
-        } catch (error) {
-            console.log('User Id not found');
-            throw new NotFoundException(`User Id not found`);
-        }
+    async deleteUserById(id: string) {
+        // try {
+        //     const user = await this.findById(id);
+        //     if (!user)
+        //         throw new NotFoundException(
+        //             `User with ID "${id}" not found`,
+        //         );
+        // } catch (error) {
+        //     console.log('User Id not found');
+        //     throw new NotFoundException(`User Id not found`);
+        // }
+        const user = await this.findById(id);
+        if (!user) throw new NotFoundException('User not Found');
 
         const res = await this.repo
             .createQueryBuilder()

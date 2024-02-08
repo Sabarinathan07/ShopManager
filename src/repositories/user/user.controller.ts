@@ -1,9 +1,17 @@
-import { User } from './../../entity/user.entity';
-import { Controller, Delete, Get, Param, Req } from '@nestjs/common';
+import {
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Req,
+    UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { customRequest } from 'src/interfaces/request.interface';
+import { UserInterceptor } from 'src/Interceptor/user.interceptor';
 
 @Controller('/api')
+@UseInterceptors(UserInterceptor)
 export class UserController {
     constructor(private userService: UserService) {}
 

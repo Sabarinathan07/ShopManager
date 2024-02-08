@@ -13,7 +13,7 @@ export class OrderInterceptor implements NestInterceptor {
     constructor(private orderValidator: OrderValidator) {}
     intercept(
         context: ExecutionContext,
-        _handler: CallHandler,
+        next: CallHandler,
     ): Observable<any> {
         const req = context.switchToHttp().getRequest();
         const handler = context.getHandler().name;
@@ -36,6 +36,6 @@ export class OrderInterceptor implements NestInterceptor {
             throw new BadRequestException(errors);
         }
 
-        return _handler.handle();
+        return next.handle();
     }
 }

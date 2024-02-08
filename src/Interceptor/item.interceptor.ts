@@ -30,11 +30,6 @@ export class ItemInterceptor implements NestInterceptor {
             throw new BadRequestException(errors);
         }
 
-        return next
-            .handle()
-            .pipe
-            // Logic to be executed after the request is handled by the controller
-            // tap(() => console.log('After handling the request')),
-            ();
+        return next.handle();
     }
 }
