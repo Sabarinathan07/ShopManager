@@ -35,7 +35,10 @@ export class ItemService {
             .createQueryBuilder('item')
             .leftJoinAndSelect('item.shopkeeper', 'user.id')
             .getMany();
-        return this.mapItemsResponse(items);
+        const mappedItems = items.map((item) =>
+            this.dbObjectToItem(item),
+        );
+        return mappedItems;
     }
 
     async getItemById(id: string) {
@@ -97,14 +100,7 @@ export class ItemService {
 
         return this.dbObjectToItem(itemToUpdate);
     }
-
-    private mapItemsResponse(items: Item[]) {
-        const mappedItems = items.map((item) =>
-            this.dbObjectToItem(item),
-        );
-        return mappedItems;
-    }
-
+    
     private dbObjectToItem(item: Item): ItemInterface {
         const { id, name, quantity, price } = item;
         const user = item.shopkeeper;

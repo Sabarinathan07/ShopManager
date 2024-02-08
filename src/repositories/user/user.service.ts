@@ -39,19 +39,13 @@ export class UserService {
         const users = await this.repo
             .createQueryBuilder('user')
             .getMany();
-        return this.mapUsers(users);
+        const mappedUsers = users.map((user) =>
+            this.dbObjectToUser(user),
+        );
+        return mappedUsers;
     }
+
     async deleteUserById(id: string) {
-        // try {
-        //     const user = await this.findById(id);
-        //     if (!user)
-        //         throw new NotFoundException(
-        //             `User with ID "${id}" not found`,
-        //         );
-        // } catch (error) {
-        //     console.log('User Id not found');
-        //     throw new NotFoundException(`User Id not found`);
-        // }
         const user = await this.findById(id);
         if (!user) throw new NotFoundException('User not Found');
 
@@ -67,13 +61,6 @@ export class UserService {
             throw new InternalServerErrorException(
                 'Failed to delete User',
             );
-    }
-
-    private mapUsers(users: User[]) {
-        const mappedUsers = users.map((user) =>
-            this.dbObjectToUser(user),
-        );
-        return mappedUsers;
     }
 
     private dbObjectToUser(user: User): UserInterface {
