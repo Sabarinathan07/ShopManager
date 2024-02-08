@@ -32,7 +32,10 @@ export class OrderController {
     }
 
     @Put('/:id')
-    async updateOrder(@Body() body, @Param('id') id: string) {
+    async updateOrder(
+        @Body() body: OrderInterface,
+        @Param('id') id: string,
+    ) {
         return await this.orderService.updateOrder(body, id);
     }
 
