@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Role } from 'src/enums/Role';
+import { Role } from 'src/repositories/user/enums/Role';
 
 export class UserInterface {
     id: string;

@@ -1,4 +1,4 @@
-import { TimelineInterface } from '../../interfaces/timeline.interface';
+import { TimelineInterface } from './interfaces/timeline.interface';
 import {
     BadRequestException,
     Body,
@@ -12,9 +12,9 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { Timeline } from 'src/enums/Timeline';
-import { OrderInterceptor } from 'src/Interceptor/order.interceptor';
-import { OrderInterface } from 'src/interfaces/order.interface';
+import { Timeline } from 'src/repositories/order/enums/Timeline';
+import { OrderInterceptor } from 'src/repositories/order/interceptors/order.interceptor';
+import { OrderInterface } from 'src/repositories/order/interfaces/order.interface';
 import { CustomerGuard } from 'src/guards/CustomerGuard';
 
 @Controller('api/order')

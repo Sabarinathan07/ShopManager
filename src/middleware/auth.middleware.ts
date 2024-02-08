@@ -6,7 +6,7 @@ import {
 import { Response, NextFunction } from 'express';
 import { UserService } from 'src/repositories/user/user.service';
 import { verify } from 'jsonwebtoken';
-import { customRequest } from 'src/interfaces/request.interface';
+import { customRequest } from 'src/repositories/user/interfaces/request.interface';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
     constructor(private userService: UserService) {}

@@ -1,4 +1,4 @@
-import { GeneralValidators } from './general.validators';
+import { GeneralValidators } from '../../../helpers/general.validators';
 
 export class UserValidator {
     validateDeleteUser(req: any): string[] {

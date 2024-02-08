@@ -4,7 +4,7 @@ import {
     ForbiddenException,
     UnauthorizedException,
 } from '@nestjs/common';
-import { Role } from 'src/enums/Role';
+import { Role } from 'src/repositories/user/enums/Role';
 
 export class CustomerGuard implements CanActivate {
     canActivate(context: ExecutionContext) {

@@ -1,6 +1,6 @@
-import { Timeline } from 'src/enums/Timeline';
+import { Timeline } from 'src/repositories/order/enums/Timeline';
 import { Request } from 'express';
-import { GeneralValidators } from './general.validators';
+import { GeneralValidators } from '../../../helpers/general.validators';
 
 export class OrderValidator {
     validateCreateOrder(req: Request) {

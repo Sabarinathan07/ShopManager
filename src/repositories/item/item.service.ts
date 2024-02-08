@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Item } from 'src/entity/item.entity';
-import { ItemInterface } from 'src/interfaces/item.interface';
-import { customRequest } from 'src/interfaces/request.interface';
+import { Item } from 'src/repositories/item/entity/item.entity';
+import { ItemInterface } from 'src/repositories/item/interfaces/item.interface';
+import { customRequest } from 'src/repositories/user/interfaces/request.interface';
 import { Repository } from 'typeorm';
-import { UserInterface } from 'src/interfaces/user.interface';
-import { User } from 'src/entity/user.entity';
+import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
+import { User } from 'src/repositories/user/entity/user.entity';
 
 @Injectable()
 export class ItemService {

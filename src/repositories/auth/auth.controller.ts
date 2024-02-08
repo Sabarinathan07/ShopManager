@@ -6,10 +6,10 @@ import {
     Res,
     UseInterceptors,
 } from '@nestjs/common';
-import { UserInterface } from 'src/interfaces/user.interface';
+import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { AuthInterceptor } from 'src/Interceptor/auth.interceptor';
+import { AuthInterceptor } from 'src/repositories/auth/interceptors/auth.interceptor';
 
 @Controller('/api')
 @UseInterceptors(AuthInterceptor)

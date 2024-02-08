@@ -6,7 +6,7 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ItemValidator } from 'src/helpers/item.validator';
+import { ItemValidator } from 'src/repositories/item/helpers/item.validator';
 
 @Injectable()
 export class ItemInterceptor implements NestInterceptor {

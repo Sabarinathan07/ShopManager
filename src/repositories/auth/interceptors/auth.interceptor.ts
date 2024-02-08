@@ -6,7 +6,7 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AuthValidator } from 'src/helpers/auth.validator';
+import { AuthValidator } from 'src/repositories/auth/helpers/auth.validator';
 
 @Injectable()
 export class AuthInterceptor implements NestInterceptor {

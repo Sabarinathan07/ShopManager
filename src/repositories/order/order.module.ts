@@ -3,10 +3,10 @@ import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { Order } from 'src/entity/order.entity';
-import { Item } from 'src/entity/item.entity';
+import { Order } from 'src/repositories/order/entity/order.entity';
+import { Item } from 'src/repositories/item/entity/item.entity';
 import { ItemService } from '../item/item.service';
-import { OrderValidator } from 'src/helpers/order.validator';
+import { OrderValidator } from 'src/repositories/order/helpers/order.validator';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Order, Item]), ConfigModule],

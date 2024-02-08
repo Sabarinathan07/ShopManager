@@ -4,11 +4,11 @@ import {
     InternalServerErrorException,
     NotFoundException,
 } from '@nestjs/common';
-import { User } from 'src/entity/user.entity';
+import { User } from 'src/repositories/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserInterface } from 'src/interfaces/user.interface';
-import { customRequest } from 'src/interfaces/request.interface';
+import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
+import { customRequest } from 'src/repositories/user/interfaces/request.interface';
 
 @Injectable()
 export class UserService {

@@ -4,15 +4,15 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Item } from 'src/entity/item.entity';
-import { Order } from 'src/entity/order.entity';
-import { User } from 'src/entity/user.entity';
+import { Item } from 'src/repositories/item/entity/item.entity';
+import { Order } from 'src/repositories/order/entity/order.entity';
+import { User } from 'src/repositories/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { ItemService } from '../item/item.service';
-import { OrderInterface } from 'src/interfaces/order.interface';
-import { UserInterface } from 'src/interfaces/user.interface';
-import { ItemInterface } from 'src/interfaces/item.interface';
-import { customRequest } from 'src/interfaces/request.interface';
+import { OrderInterface } from 'src/repositories/order/interfaces/order.interface';
+import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
+import { ItemInterface } from 'src/repositories/item/interfaces/item.interface';
+import { customRequest } from 'src/repositories/user/interfaces/request.interface';
 
 @Injectable()
 export class OrderService {

@@ -3,15 +3,15 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-import { User } from 'src/entity/user.entity';
-import { Role } from 'src/enums/Role';
+import { User } from 'src/repositories/user/entity/user.entity';
+import { Role } from 'src/repositories/user/enums/Role';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { payload } from 'src/dtos/payload.dto';
+import { payload } from 'src/repositories/auth/interfaces/payload.interface';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
-import { UserInterface } from 'src/interfaces/user.interface';
+import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
 import { Response } from 'express';
 dotenv.config();
 
