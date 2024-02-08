@@ -88,7 +88,6 @@ export class AuthService {
 
         const id = user.id;
         const token = await this.generateToken({ id: id });
-        console.log(token);
         response.cookie('token', token);
         return this.dbObjectToUser(user);
     }

@@ -108,7 +108,7 @@ export class ItemService {
     private dbObjectToItem(item: Item): ItemInterface {
         const { id, name, quantity, price } = item;
         const user = item.shopkeeper;
-        const shopkeeper = this.dbObjectToCustomer(user);
+        const shopkeeper = this.dbObjectToShopkeeper(user);
         return <ItemInterface>{
             id,
             name,
@@ -118,7 +118,7 @@ export class ItemService {
         };
     }
 
-    private dbObjectToCustomer(user: User): UserInterface {
+    private dbObjectToShopkeeper(user: User): UserInterface {
         const { id, name, email } = user;
         return { id, name, email };
     }

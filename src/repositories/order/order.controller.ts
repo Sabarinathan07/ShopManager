@@ -42,16 +42,21 @@ export class OrderController {
     }
 
     @Post('/:timeline')
+    @UseGuards(CustomerGuard)
     async getAmount(
         @Body() body: TimelineInterface,
         @Param('timeline') timeline: Timeline,
+        @Req() req,
     ) {
         if (timeline == Timeline.day) {
-            return await this.orderService.getAmountByDay(body);
+            return await this.orderService.getAmountByDay(body, req);
         } else if (timeline == Timeline.week) {
-            return await this.orderService.getAmountByWeek(body);
+            return await this.orderService.getAmountByWeek(body, req);
         } else if (timeline == Timeline.month) {
-            return await this.orderService.getAmountByMonth(body);
+            return await this.orderService.getAmountByMonth(
+                body,
+                req,
+            );
         } else {
             throw new BadRequestException('Invalid timeline');
         }

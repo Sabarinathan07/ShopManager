@@ -1,6 +1,7 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ItemInterface {
+    id: string;
     @ApiPropertyOptional()
     name?: string;
     @ApiPropertyOptional()
