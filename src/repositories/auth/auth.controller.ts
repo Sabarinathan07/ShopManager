@@ -16,8 +16,11 @@ import { AuthInterceptor } from 'src/Interceptor/auth.interceptor';
 export class AuthController {
     constructor(private authService: AuthService) {}
     @Post('/register')
-    async createUser(@Body() body: UserInterface) {
-        return await this.authService.createUser(body);
+    async createUser(
+        @Body() body: UserInterface,
+        @Res({ passthrough: true }) response: Response,
+    ) {
+        return await this.authService.createUser(body, response);
     }
 
     @HttpCode(200)
@@ -26,9 +29,7 @@ export class AuthController {
         @Body() body: UserInterface,
         @Res({ passthrough: true }) response: Response,
     ) {
-        const res = await this.authService.login(body);
-        response.cookie('token', res.token);
-        // session.userId = res.token;
+        const res = await this.authService.login(body, response);
         return res;
     }
 

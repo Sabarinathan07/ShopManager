@@ -12,6 +12,7 @@ import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import { UserInterface } from 'src/interfaces/user.interface';
+import { Response } from 'express';
 dotenv.config();
 
 @Injectable()
@@ -47,7 +48,7 @@ export class AuthService {
             .where('user.id = :id', { id })
             .getOne();
     }
-    async createUser(body: UserInterface) {
+    async createUser(body: UserInterface, response: Response) {
         const users = await this.findByEmail(body.email);
         if (users) {
             throw new BadRequestException('email in use');
@@ -68,15 +69,16 @@ export class AuthService {
 
         const id = res.raw[0].id;
         const token = await this.generateToken({ id: id });
+        response.cookie('token', token);
         const user = await this.findById(id);
 
-        return this.DbObjectToUser(user, token);
+        return this.dbObjectToUser(user);
 
         // const user = this.repo.create(newUser);
         // return this.repo.save(user);
     }
 
-    async login(body: UserInterface) {
+    async login(body: UserInterface, response: Response) {
         const { email, password } = body;
         const user = await this.findByEmail(email);
 
@@ -90,12 +92,15 @@ export class AuthService {
 
         const id = user.id;
         const token = await this.generateToken({ id: id });
+        console.log(token);
+        response.cookie('token', token);
+
         // return { user, token };
-        return this.DbObjectToUser(user, token);
+        return this.dbObjectToUser(user);
     }
 
-    DbObjectToUser(user: User, token: string): UserInterface {
+    private dbObjectToUser(user: User): UserInterface {
         const { id, name, email, role } = user;
-        return { id, name, email, role, token };
+        return <UserInterface>{ id, name, email, role };
     }
 }
