@@ -1,5 +1,6 @@
 import {
     BadRequestException,
+    Inject,
     Injectable,
     InternalServerErrorException,
     NotFoundException,
@@ -9,11 +10,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserInterface } from 'src/repositories/user/interfaces/user.interface';
 import { customRequest } from 'src/repositories/user/interfaces/request.interface';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private repo: Repository<User>,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache,
     ) {}
 
     async findByEmail(email: string) {
@@ -35,14 +39,31 @@ export class UserService {
         return this.dbObjectToUser(req.currentUser);
     }
 
+    // async getAllUsers() {
+    //     const users = await this.repo
+    //         .createQueryBuilder('user')
+    //         .getMany();
+    //     const mappedUsers = users.map((user) =>
+    //         this.dbObjectToUser(user),
+    //     );
+    //     return mappedUsers;
+    // }
+
     async getAllUsers() {
+        // await this.cacheManager.reset();
+        const ordersC = await this.cacheManager.get('Users');
+        console.log('before cache return');
+        if (ordersC) {
+            return ordersC;
+        }
+        console.log('after cache return');
+
         const users = await this.repo
             .createQueryBuilder('user')
             .getMany();
-        const mappedUsers = users.map((user) =>
-            this.dbObjectToUser(user),
-        );
-        return mappedUsers;
+
+        await this.cacheManager.set('Users', users, 0);
+        return users;
     }
 
     async deleteUserById(id: string) {

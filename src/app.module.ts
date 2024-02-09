@@ -8,6 +8,9 @@ import { UserModule } from './repositories/user/user.module';
 import { OrderModule } from './repositories/order/order.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { AuthModule } from './repositories/auth/auth.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { RedisOptions } from './database/redis-options';
+
 
 @Module({
     imports: [
@@ -15,6 +18,7 @@ import { AuthModule } from './repositories/auth/auth.module';
             isGlobal: true,
             envFilePath: `.env`,
         }),
+        CacheModule.registerAsync(RedisOptions),
         DbModule,
         AuthModule,
         UserModule,
