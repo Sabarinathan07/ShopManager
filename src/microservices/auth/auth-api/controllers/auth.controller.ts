@@ -7,7 +7,7 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Response } from 'express';
 import { AuthInterceptor } from 'src/microservices/auth/interceptors/auth.interceptor';
 

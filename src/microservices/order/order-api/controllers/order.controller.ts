@@ -1,4 +1,4 @@
-import { TimelineInterface } from './interfaces/timeline.interface';
+import { TimelineInterface } from '../../interfaces/timeline.interface';
 import {
     BadRequestException,
     Body,
@@ -11,7 +11,7 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { OrderService } from './services/order.service';
+import { OrderService } from '../../services/order.service';
 import { Timeline } from 'src/microservices/order/enums/Timeline';
 import { OrderInterceptor } from 'src/microservices/order/interceptors/order.interceptor';
 import { OrderInterface } from 'src/microservices/order/interfaces/order.interface';

@@ -1,4 +1,4 @@
-import { ItemService } from './services/item.service';
+import { ItemService } from '../../services/item.service';
 import {
     Body,
     Controller,
