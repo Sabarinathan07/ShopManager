@@ -11,7 +11,6 @@ import { AuthModule } from './repositories/auth/auth.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './database/redis-options';
 
-
 @Module({
     imports: [
         ConfigModule.forRoot({
