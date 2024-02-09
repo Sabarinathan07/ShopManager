@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './database/redis-options';
-import { AppApiModule } from './app-api/app-api.module';
 import { MicroservicesModule } from './microservices/microservices.module';
 
 @Module({
@@ -17,7 +16,6 @@ import { MicroservicesModule } from './microservices/microservices.module';
         CacheModule.registerAsync(RedisOptions),
         DbModule,
         MicroservicesModule,
-        AppApiModule,
     ],
     controllers: [AppController],
     providers: [AppService],
