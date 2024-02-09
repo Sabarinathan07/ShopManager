@@ -36,11 +36,10 @@ export class UserService {
 
     async getAllUsers() {
         const ordersC = await this.cacheManager.get('Users');
-        console.log(ordersC);
+        console.log('before cache return');
         if (ordersC) {
             return ordersC;
         }
-        // console.log(ordersC);
 
         const users = await this.repo
             .createQueryBuilder('user')
