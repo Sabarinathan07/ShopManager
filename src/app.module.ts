@@ -8,8 +8,7 @@ import { UserModule } from './repositories/user/user.module';
 import { OrderModule } from './repositories/order/order.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { AuthModule } from './repositories/auth/auth.module';
-import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
-// import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './database/resdis-options';
 
 @Module({
@@ -26,13 +25,7 @@ import { RedisOptions } from './database/resdis-options';
         OrderModule,
     ],
     controllers: [AppController],
-    providers: [
-        AppService,
-        // {
-        //     provide: APP_INTERCEPTOR,
-        //     useClass: CacheInterceptor,
-        // },
-    ],
+    providers: [AppService],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {

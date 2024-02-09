@@ -35,22 +35,22 @@ export class UserService {
     }
 
     async getAllUsers() {
-        const ordersC = await this.cacheManager.get('userc');
+        const ordersC = await this.cacheManager.get('Users');
+        console.log(ordersC);
         if (ordersC) {
             return ordersC;
         }
-        console.log(ordersC);
+        // console.log(ordersC);
 
         const users = await this.repo
             .createQueryBuilder('user')
             .getMany();
 
         await this.cacheManager.set(
-            'usersc',
+            'Users',
             JSON.stringify(users),
             0,
         );
-
         return users;
     }
 
