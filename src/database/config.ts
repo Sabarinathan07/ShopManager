@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { Item } from 'src/repositories/item/entity/item.entity';
-import { Order } from 'src/repositories/order/entity/order.entity';
-import { User } from 'src/repositories/user/entity/user.entity';
+import { Item } from 'src/microservices/item/entity/item.entity';
+import { Order } from 'src/microservices/order/entity/order.entity';
+import { User } from 'src/microservices/user/entity/user.entity';
 
 @Module({
     imports: [
