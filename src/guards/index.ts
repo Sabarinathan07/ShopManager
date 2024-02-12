@@ -1,1 +1,1 @@
-export * from './CustomerGuard';
+export * from './ShopkeeperGuard';
