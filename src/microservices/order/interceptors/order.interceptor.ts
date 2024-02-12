@@ -32,6 +32,9 @@ export class OrderInterceptor implements NestInterceptor {
                 this.orderValidator.validateGetAmountRequest(req);
         }
 
+        if (handler === 'updateOrder') {
+            errors = this.orderValidator.validateOrderUUID(req);
+        }
         if (errors.length > 0) {
             throw new BadRequestException(errors);
         }

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { GeneralValidators } from 'src/helpers';
 
 export class ItemValidator {
     validateCreateItem(req: Request): string[] {
@@ -51,6 +52,16 @@ export class ItemValidator {
             errors.push('Price must be a number');
         }
 
+        return errors;
+    }
+    validateItemUUID(req: any): string[] {
+        const errors: string[] = [];
+        const itemId = req.params.id;
+        if (!itemId) {
+            errors.push('ID is required');
+        } else if (!GeneralValidators.isValidUUID(itemId)) {
+            errors.push('ID should be a valid UUID');
+        }
         return errors;
     }
 }

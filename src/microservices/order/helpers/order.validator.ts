@@ -37,6 +37,17 @@ export class OrderValidator {
         return errors;
     }
 
+    validateOrderUUID(req: any): string[] {
+        const errors: string[] = [];
+        const orderId = req.params.id;
+        if (!orderId) {
+            errors.push('ID is required');
+        } else if (!GeneralValidators.isValidUUID(orderId)) {
+            errors.push('ID should be a valid UUID');
+        }
+        return errors;
+    }
+
     validateGetAmountRequest(req: Request) {
         const errors: string[] = [];
 

@@ -26,6 +26,15 @@ export class ItemInterceptor implements NestInterceptor {
         if (handler === 'updateItem') {
             errors = this.itemValidator.validateUpdateItem(req);
         }
+
+        if (
+            handler === 'getItemById' ||
+            handler === 'updateItem' ||
+            handler === 'deleteItemQuantity'
+        ) {
+            errors = this.itemValidator.validateItemUUID(req);
+        }
+
         if (errors.length > 0) {
             throw new BadRequestException(errors);
         }
