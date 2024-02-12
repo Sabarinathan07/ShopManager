@@ -5,17 +5,20 @@ import {
     HttpCode,
     Res,
     UseInterceptors,
+    UseGuards,
 } from '@nestjs/common';
 import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
 import { AuthService } from '../services/auth.service';
 import { Response } from 'express';
 import { AuthInterceptor } from 'src/microservices/auth/interceptors/auth.interceptor';
+import { RateLimitGuard } from 'src/guards/RateLimitGuard';
 
 @Controller('/api')
 @UseInterceptors(AuthInterceptor)
 export class AuthController {
     constructor(private authService: AuthService) {}
     @Post('/register')
+    @UseGuards(RateLimitGuard)
     async createUser(
         @Body() body: UserInterface,
         @Res({ passthrough: true }) response: Response,
@@ -25,6 +28,7 @@ export class AuthController {
 
     @HttpCode(200)
     @Post('/login')
+    @UseGuards(RateLimitGuard)
     async loginUser(
         @Body() body: UserInterface,
         @Res({ passthrough: true }) response: Response,
