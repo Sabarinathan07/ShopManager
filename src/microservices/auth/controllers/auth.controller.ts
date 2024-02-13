@@ -6,6 +6,7 @@ import {
     Res,
     UseInterceptors,
     UseGuards,
+    HttpStatus,
 } from '@nestjs/common';
 import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
 import { AuthService } from '../services/auth.service';
@@ -26,7 +27,7 @@ export class AuthController {
         return await this.authService.createUser(body, response);
     }
 
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     @Post('/login')
     @UseGuards(RateLimitGuard)
     async loginUser(
