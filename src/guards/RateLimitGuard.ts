@@ -32,12 +32,12 @@ export class RateLimitGuard implements CanActivate {
             const rateLimiterRes = await rateLimiter.consume(
                 request.ip + request.body.email,
             );
-            console.log(rateLimiterRes);
+            // console.log(rateLimiterRes);
         } catch (rateLimiterRes) {
             const minLeft = Math.ceil(
                 rateLimiterRes.msBeforeNext / 1000 / 60,
             );
-            console.log(rateLimiterRes.msBeforeNext);
+            // console.log(rateLimiterRes.msBeforeNext);
 
             throw new HttpException(
                 {
