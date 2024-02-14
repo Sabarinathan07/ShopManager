@@ -1,13 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-    dotenv.config();
-    const port = process.env.PORT || 3000;
     const app = await NestFactory.create(AppModule);
+    const port = process.env.PORT || 3000;
     app.use(cookieParser());
     console.log('Nest application created and Database connected');
 

@@ -6,7 +6,7 @@ import {
     Injectable,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { OrderValidator } from 'src/microservices/order/helpers/order.validator';
+import { OrderValidator } from '../../../microservices/order/helpers/order.validator';
 
 @Injectable()
 export class OrderInterceptor implements NestInterceptor {

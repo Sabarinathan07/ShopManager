@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { GeneralValidators } from 'src/helpers';
+import { GeneralValidators } from '../../../helpers';
 
 export class ItemValidator {
     validateCreateItem(req: Request): string[] {

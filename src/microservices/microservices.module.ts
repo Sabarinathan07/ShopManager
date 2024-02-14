@@ -3,8 +3,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ItemModule } from './item/item.module';
 import { OrderModule } from './order/order.module';
-import { AuthMiddleware } from 'src/middleware/auth.middleware';
-
+import { AuthMiddleware } from '../middleware/auth.middleware';
 @Module({
     imports: [UserModule, AuthModule, ItemModule, OrderModule],
 })

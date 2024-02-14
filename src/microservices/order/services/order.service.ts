@@ -6,15 +6,15 @@ import {
     forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Item } from 'src/microservices/item/entity/item.entity';
-import { Order } from 'src/microservices/order/entity/order.entity';
-import { User } from 'src/microservices/user/entity/user.entity';
+import { Item } from '../../../microservices/item/entity/item.entity';
+import { Order } from '../../../microservices/order/entity/order.entity';
+import { User } from '../../../microservices/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { ItemService } from '../../item/services/item.service';
-import { OrderInterface } from 'src/microservices/order/interfaces/order.interface';
-import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
-import { ItemInterface } from 'src/microservices/item/interfaces/item.interface';
-import { customRequest } from 'src/microservices/user/interfaces/request.interface';
+import { OrderInterface } from '../../../microservices/order/interfaces/order.interface';
+import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
+import { ItemInterface } from '../../../microservices/item/interfaces/item.interface';
+import { customRequest } from '../../../microservices/user/interfaces/request.interface';
 
 @Injectable()
 export class OrderService {

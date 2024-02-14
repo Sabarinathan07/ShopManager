@@ -4,7 +4,7 @@ import {
     ForbiddenException,
     UnauthorizedException,
 } from '@nestjs/common';
-import { Role } from 'src/microservices/user/enums/Role';
+import { Role } from '../microservices/user/enums/Role';
 
 export class ShopkeeperGuard implements CanActivate {
     canActivate(context: ExecutionContext) {

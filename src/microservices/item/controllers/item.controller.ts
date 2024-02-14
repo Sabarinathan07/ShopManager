@@ -10,10 +10,10 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { customRequest } from 'src/microservices/user/interfaces/request.interface';
-import { ItemInterface } from 'src/microservices/item/interfaces/item.interface';
-import { ItemInterceptor } from 'src/microservices/item/interceptors/item.interceptor';
-import { ShopkeeperGuard } from 'src/guards/ShopkeeperGuard';
+import { customRequest } from '../../../microservices/user/interfaces/request.interface';
+import { ItemInterface } from '../../../microservices/item/interfaces/item.interface';
+import { ItemInterceptor } from '../../../microservices/item/interceptors/item.interceptor';
+import { ShopkeeperGuard } from '../../../guards/ShopkeeperGuard';
 
 @Controller('/api/item')
 @UseInterceptors(ItemInterceptor)

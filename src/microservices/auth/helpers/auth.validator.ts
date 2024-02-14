@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Role } from 'src/microservices/user/enums/Role';
+import { Role } from '../../../microservices/user/enums/Role';
 import { GeneralValidators } from '../../../helpers/general.validators';
 
 export class AuthValidator {

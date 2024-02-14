@@ -8,11 +8,11 @@ import {
     UseGuards,
     HttpStatus,
 } from '@nestjs/common';
-import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
+import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
 import { AuthService } from '../services/auth.service';
 import { Response } from 'express';
-import { AuthInterceptor } from 'src/microservices/auth/interceptors/auth.interceptor';
-import { RateLimitGuard } from 'src/guards/RateLimitGuard';
+import { AuthInterceptor } from '../../../microservices/auth/interceptors/auth.interceptor';
+import { RateLimitGuard } from '../../../guards/RateLimitGuard';
 
 @Controller('/api')
 @UseInterceptors(AuthInterceptor)

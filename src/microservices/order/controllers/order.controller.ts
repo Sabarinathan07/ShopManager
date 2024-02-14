@@ -11,9 +11,10 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { OrderService } from '../services/order.service';
-import { Timeline } from 'src/microservices/order/enums/Timeline';
-import { OrderInterceptor } from 'src/microservices/order/interceptors/order.interceptor';
-import { OrderInterface } from 'src/microservices/order/interfaces/order.interface';
+import { Timeline } from '../../../microservices/order/enums/Timeline';
+import { OrderInterceptor } from '../../../microservices/order/interceptors/order.interceptor';
+import { OrderInterface } from '../../../microservices/order/interfaces/order.interface';
+import { customRequest } from '../../../microservices/user';
 
 @Controller('api/order')
 @UseInterceptors(OrderInterceptor)
@@ -21,7 +22,10 @@ export class OrderController {
     constructor(private orderService: OrderService) {}
 
     @Post()
-    async createOrder(@Body() body: OrderInterface, @Req() req) {
+    async createOrder(
+        @Body() body: OrderInterface,
+        @Req() req: customRequest,
+    ) {
         return await this.orderService.createOrder(
             body,
             req.currentUser,

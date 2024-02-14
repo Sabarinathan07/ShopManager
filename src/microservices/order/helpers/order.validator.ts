@@ -1,4 +1,4 @@
-import { Timeline } from 'src/microservices/order/enums/Timeline';
+import { Timeline } from '../../../microservices/order/enums/Timeline';
 import { Request } from 'express';
 import { GeneralValidators } from '../../../helpers/general.validators';
 

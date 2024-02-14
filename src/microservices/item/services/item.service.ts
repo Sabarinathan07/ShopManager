@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Item } from 'src/microservices/item/entity/item.entity';
-import { ItemInterface } from 'src/microservices/item/interfaces/item.interface';
-import { customRequest } from 'src/microservices/user/interfaces/request.interface';
+import { Item } from '../../../microservices/item/entity/item.entity';
+import { ItemInterface } from '../../../microservices/item/interfaces/item.interface';
+import { customRequest } from '../../../microservices/user/interfaces/request.interface';
 import { Repository } from 'typeorm';
-import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
-import { User } from 'src/microservices/user/entity/user.entity';
+import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
+import { User } from '../../../microservices/user/entity/user.entity';
 
 @Injectable()
 export class ItemService {

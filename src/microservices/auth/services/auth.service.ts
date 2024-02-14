@@ -3,17 +3,15 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-import { User } from 'src/microservices/user/entity/user.entity';
-import { Role } from 'src/microservices/user/enums/Role';
+import { User } from '../../../microservices/user/entity/user.entity';
+import { Role } from '../../../microservices/user/enums/Role';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { payload } from 'src/microservices/auth/interfaces/payload.interface';
+import { payload } from '../../../microservices/auth/interfaces/payload.interface';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-import * as dotenv from 'dotenv';
-import { UserInterface } from 'src/microservices/user/interfaces/user.interface';
+import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
 import { Response } from 'express';
-dotenv.config();
 
 @Injectable()
 export class AuthService {
