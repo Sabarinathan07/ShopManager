@@ -20,6 +20,7 @@ export class ItemService {
         newItem.quantity = body.quantity;
         newItem.price = body.price;
         newItem.orders = [];
+        // newItem.orders.push(new Order());
 
         await this.repo
             .createQueryBuilder()

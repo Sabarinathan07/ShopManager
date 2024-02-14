@@ -1,7 +1,9 @@
 import {
     BadRequestException,
+    Inject,
     Injectable,
     NotFoundException,
+    forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from 'src/microservices/item/entity/item.entity';
@@ -17,7 +19,9 @@ import { customRequest } from 'src/microservices/user/interfaces/request.interfa
 @Injectable()
 export class OrderService {
     constructor(
-        @InjectRepository(Order) private repo: Repository<Order>,
+        // @Inject(forwardRef(() => ItemService))
+        @InjectRepository(Order)
+        private repo: Repository<Order>,
         @InjectRepository(Item) private itemRepo: Repository<Item>,
         private itemService: ItemService,
     ) {}
@@ -203,6 +207,8 @@ export class OrderService {
             throw new BadRequestException(
                 'Requested quantity exceeds available stock try with a small amount',
             );
+
+        // itemDetails.orders = [...itemDetails.orders, id];
 
         itemDetails.quantity = itemDetails.quantity - quantity;
         await this.itemRepo

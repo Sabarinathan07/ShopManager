@@ -3,6 +3,7 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToOne,
+    JoinTable,
 } from 'typeorm';
 import { Item } from '../../item/entity/item.entity';
 import { User } from '../../user/entity/user.entity';
@@ -24,7 +25,9 @@ export class Order {
     @ManyToOne(() => User, (user) => user.id)
     customer: User;
 
-    @ManyToOne(() => Item, (item) => item.id)
+    @ManyToOne(() => Item, (item) => item.orders, {
+        // cascade: true,
+    })
+    // @JoinTable()
     item: Item;
-    newOrder: Promise<Item>;
 }
