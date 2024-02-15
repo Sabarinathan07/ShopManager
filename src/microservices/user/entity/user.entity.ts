@@ -4,8 +4,8 @@ import {
     Column,
     OneToMany,
 } from 'typeorm';
-import { Order } from '../../order/entity/order.entity';
-import { Role } from '../enums/Role';
+import { Order } from '../../order/entity/';
+import { Role } from '../enums/';
 
 @Entity()
 export class User {

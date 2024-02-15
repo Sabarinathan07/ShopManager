@@ -3,14 +3,14 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common';
-import { User } from '../../../microservices/user/entity/user.entity';
-import { Role } from '../../../microservices/user/enums/Role';
+import { User } from '../../../microservices/user/entity/';
+import { Role } from '../../../microservices/user/enums/';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { payload } from '../../../microservices/auth/interfaces/payload.interface';
+import { payload } from '../../../microservices/auth/interfaces/';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
+import { UserInterface } from '../../../microservices/user/interfaces/';
 import { Response } from 'express';
 
 @Injectable()

@@ -4,11 +4,11 @@ import {
     InternalServerErrorException,
     NotFoundException,
 } from '@nestjs/common';
-import { User } from '../../../microservices/user/entity/user.entity';
+import { User } from '../../../microservices/user/entity/';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
-import { customRequest } from '../../../microservices/user/interfaces/request.interface';
+import { UserInterface } from '../../../microservices/user/interfaces/';
+import { customRequest } from '../../../microservices/user/interfaces/';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 

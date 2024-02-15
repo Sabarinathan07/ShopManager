@@ -3,10 +3,9 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToOne,
-    JoinTable,
 } from 'typeorm';
-import { Item } from '../../item/entity/item.entity';
-import { User } from '../../user/entity/user.entity';
+import { Item } from '../../item/entity/';
+import { User } from '../../user/entity/';
 
 @Entity()
 export class Order {

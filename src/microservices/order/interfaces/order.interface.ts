@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ItemInterface } from '../../item/interfaces/item.interface';
-import { UserInterface } from '../../user/interfaces/user.interface';
+import { UserInterface } from '../../user/interfaces/';
+import { ItemInterface } from '../../item/interfaces/';
 
 export class OrderInterface {
     id?: string;

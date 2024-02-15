@@ -4,9 +4,9 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { UserService } from '../microservices/user/services/user.service';
+import { UserService } from '../microservices/user/services/';
 import { verify } from 'jsonwebtoken';
-import { customRequest } from '../microservices/user/interfaces/request.interface';
+import { customRequest } from '../microservices/user/interfaces/';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
     constructor(private userService: UserService) {}

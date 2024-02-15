@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ItemService } from './services/item.service';
-import { ItemController } from './controllers/item.controller';
+import { ItemService } from './services/';
+import { ItemController } from './controllers/';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Item } from '../../microservices/item/entity/item.entity';
-import { ItemValidator } from '../../microservices/item/helpers/item.validator';
+import { Item } from '../../microservices/item/entity/';
+import { ItemValidator } from '../../microservices/item/helpers/';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Item])],

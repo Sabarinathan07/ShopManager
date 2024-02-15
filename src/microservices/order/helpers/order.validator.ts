@@ -1,6 +1,6 @@
-import { Timeline } from '../../../microservices/order/enums/Timeline';
+import { Timeline } from '../../../microservices/order/enums/';
 import { Request } from 'express';
-import { GeneralValidators } from '../../../helpers/general.validators';
+import { GeneralValidators } from '../../../helpers/';
 
 export class OrderValidator {
     validateCreateOrder(req: Request) {

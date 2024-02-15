@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './services/user.service';
-import { UserController } from './controllers/user.controller';
+import { UserService } from './services/';
+import { UserController } from './controllers/';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../../microservices/user/entity/user.entity';
-import { UserValidator } from '../../microservices/user/helpers/user.validator';
+import { User } from '../../microservices/user/entity/';
+import { UserValidator } from '../../microservices/user/helpers/';
 
 @Module({
     imports: [TypeOrmModule.forFeature([User])],

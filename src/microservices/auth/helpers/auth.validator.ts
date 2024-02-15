@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { Role } from '../../../microservices/user/enums/Role';
-import { GeneralValidators } from '../../../helpers/general.validators';
+import { Role } from '../../../microservices/user/enums/';
+import { GeneralValidators } from '../../../helpers/';
 
 export class AuthValidator {
     validateCreateUser(req: Request): string[] {

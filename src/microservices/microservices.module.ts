@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { ItemModule } from './item/item.module';
-import { OrderModule } from './order/order.module';
-import { AuthMiddleware } from '../middleware/auth.middleware';
+import { UserModule } from './user/';
+import { AuthModule } from './auth/';
+import { ItemModule } from './item/';
+import { OrderModule } from './order/';
+import { AuthMiddleware } from '../middleware/';
 @Module({
     imports: [UserModule, AuthModule, ItemModule, OrderModule],
 })

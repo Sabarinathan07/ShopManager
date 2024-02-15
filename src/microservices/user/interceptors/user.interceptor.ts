@@ -6,7 +6,7 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UserValidator } from '../helpers/user.validator';
+import { UserValidator } from '../helpers/';
 
 @Injectable()
 export class UserInterceptor implements NestInterceptor {

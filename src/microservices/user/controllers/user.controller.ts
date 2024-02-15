@@ -6,9 +6,9 @@ import {
     Req,
     UseInterceptors,
 } from '@nestjs/common';
-import { UserService } from '../services/user.service';
-import { customRequest } from '../../../microservices/user/interfaces/request.interface';
-import { UserInterceptor } from '../../../microservices/user/interceptors/user.interceptor';
+import { UserService } from '../services/';
+import { customRequest } from '../../user/interfaces/';
+import { UserInterceptor } from '../../user/interceptors/';
 
 @Controller('/api')
 @UseInterceptors(UserInterceptor)

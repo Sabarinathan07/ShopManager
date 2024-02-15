@@ -1,11 +1,11 @@
-import { DbModule } from './database/config';
+import { DbModule } from './database/';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './';
+import { AppService } from './';
 import { CacheModule } from '@nestjs/cache-manager';
-import { RedisOptions } from './database/redis-options';
-import { MicroservicesModule } from './microservices/microservices.module';
+import { RedisOptions } from './database/';
+import { MicroservicesModule } from './microservices/';
 
 @Module({
     imports: [

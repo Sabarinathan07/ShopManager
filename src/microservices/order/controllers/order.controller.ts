@@ -1,4 +1,4 @@
-import { TimelineInterface } from '../interfaces/timeline.interface';
+import { TimelineInterface } from '../interfaces/';
 import {
     BadRequestException,
     Body,
@@ -10,11 +10,11 @@ import {
     Req,
     UseInterceptors,
 } from '@nestjs/common';
-import { OrderService } from '../services/order.service';
-import { Timeline } from '../../../microservices/order/enums/Timeline';
-import { OrderInterceptor } from '../../../microservices/order/interceptors/order.interceptor';
-import { OrderInterface } from '../../../microservices/order/interfaces/order.interface';
-import { customRequest } from '../../../microservices/user';
+import { OrderService } from '../services/';
+import { Timeline } from '../../../microservices/order/enums/';
+import { OrderInterceptor } from '../../../microservices/order/interceptors/';
+import { OrderInterface } from '../../../microservices/order/interfaces/';
+import { customRequest } from '../../../microservices/';
 
 @Controller('api/order')
 @UseInterceptors(OrderInterceptor)

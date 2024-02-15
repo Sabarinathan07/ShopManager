@@ -1,4 +1,3 @@
-import { ItemService } from '../services/item.service';
 import {
     Body,
     Controller,
@@ -10,10 +9,11 @@ import {
     UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
-import { customRequest } from '../../../microservices/user/interfaces/request.interface';
-import { ItemInterface } from '../../../microservices/item/interfaces/item.interface';
-import { ItemInterceptor } from '../../../microservices/item/interceptors/item.interceptor';
-import { ShopkeeperGuard } from '../../../guards/ShopkeeperGuard';
+import { ItemService } from '../services/';
+import { customRequest } from '../../../microservices/user/interfaces/';
+import { ItemInterface } from '../../../microservices/item/interfaces/';
+import { ItemInterceptor } from '../../../microservices/item/interceptors/';
+import { ShopkeeperGuard } from '../../../guards/';
 
 @Controller('/api/item')
 @UseInterceptors(ItemInterceptor)

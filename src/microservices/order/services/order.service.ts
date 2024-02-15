@@ -1,20 +1,18 @@
 import {
     BadRequestException,
-    Inject,
     Injectable,
     NotFoundException,
-    forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Item } from '../../../microservices/item/entity/item.entity';
-import { Order } from '../../../microservices/order/entity/order.entity';
-import { User } from '../../../microservices/user/entity/user.entity';
+import { Item } from '../../../microservices/item/entity/';
+import { Order } from '../../../microservices/order/entity/';
+import { User } from '../../../microservices/user/entity/';
 import { Repository } from 'typeorm';
 import { ItemService } from '../../item/services/item.service';
-import { OrderInterface } from '../../../microservices/order/interfaces/order.interface';
-import { UserInterface } from '../../../microservices/user/interfaces/user.interface';
-import { ItemInterface } from '../../../microservices/item/interfaces/item.interface';
-import { customRequest } from '../../../microservices/user/interfaces/request.interface';
+import { OrderInterface } from '../../../microservices/order/interfaces/';
+import { UserInterface } from '../../../microservices/user/interfaces/';
+import { ItemInterface } from '../../../microservices/item/interfaces/';
+import { customRequest } from '../../../microservices/user/interfaces/';
 
 @Injectable()
 export class OrderService {
