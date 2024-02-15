@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Item } from '../microservices/item/entity/';
 import { Order } from '../microservices/order/entity/';
 import { User } from '../microservices/user/entity/';
+import { Team } from 'src/microservices/team/entity/team.entity';
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import { User } from '../microservices/user/entity/';
                     password: config.get<string>('DB_PASS'),
                     database: config.get<string>('DB_NAME'),
                     synchronize: true,
-                    entities: [User, Item, Order],
+                    entities: [User, Item, Order, Team],
                 };
             },
         }),

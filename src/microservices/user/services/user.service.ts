@@ -65,6 +65,19 @@ export class UserService {
         return users;
     }
 
+    async getUsersByTeamId(id: string) {
+        const users = await this.repo
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.team', 'team')
+            .where('user.team = :id', { id })
+            .getMany();
+
+        console.log(users);
+        console.log('jiojoasd');
+
+        return users;
+    }
+
     async deleteUserById(id: string) {
         const user = await this.findById(id);
         if (!user) throw new NotFoundException('User not Found');

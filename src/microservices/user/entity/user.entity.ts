@@ -3,9 +3,11 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
+    ManyToOne,
 } from 'typeorm';
 import { Order } from '../../order/entity/';
 import { Role } from '../enums/';
+import { Team } from 'src/microservices/team/entity/team.entity';
 
 @Entity()
 export class User {
@@ -29,6 +31,12 @@ export class User {
         default: () => 'CURRENT_TIMESTAMP',
     })
     date: Date;
+
+    @Column({ default: false })
+    teamadmin: boolean;
+
+    @ManyToOne(() => Team, (team) => team.users)
+    team: Team;
 
     @OneToMany(() => Order, (order) => order.customer)
     orders: Order[];
