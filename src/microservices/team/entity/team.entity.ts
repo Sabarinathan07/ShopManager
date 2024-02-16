@@ -1,3 +1,30 @@
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    ManyToOne,
+} from 'typeorm';
+import { User } from '../../user/entity/user.entity';
+
+@Entity()
+export class Team {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column()
+    name: string;
+
+    // @Column({ name: 'admin_id', nullable: true })
+    // adminId: string;
+
+    @ManyToOne(() => User, (user) => user.team)
+    admin: User;
+
+    @OneToMany(() => User, (user) => user.team)
+    users: User[];
+}
+
 // import { User } from 'src/microservices/user';
 // import {
 //     Column,
@@ -35,32 +62,3 @@
 //     // @JoinColumn({ name: 'users_id' })
 //     // members: User[] | null;
 // }
-
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    OneToMany,
-    ManyToOne,
-} from 'typeorm';
-import { User } from '../../user/entity/user.entity';
-
-@Entity()
-export class Team {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column()
-    name: string;
-
-    // @Column({ name: 'admin_id', nullable: true })
-    // adminId: string;
-
-    @ManyToOne(() => User, (user) => user.team)
-    admin: User;
-
-    @OneToMany(() => User, (user) => user.team)
-    users: User[];
-
-    // Add any other properties or relationships as needed
-}

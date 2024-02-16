@@ -48,10 +48,11 @@ export class UserTeamService {
 
     async removeMembersfromTeam(
         req: customRequest,
-        id: string,
         body: TeamInterface,
     ) {
-        const team = await this.teamService.getTeamById(id);
+        const team = await this.teamService.getTeamById(
+            req.currentUser.team_id,
+        );
         for (const memberId of body.members) {
             // use try and catch
             const user = await this.userService.findById(memberId);
@@ -61,12 +62,10 @@ export class UserTeamService {
         return team;
     }
 
-    async addMembersToTeam(
-        req: customRequest,
-        id: string,
-        body: TeamInterface,
-    ) {
-        const team = await this.teamService.getTeamById(id);
+    async addMembersToTeam(req: customRequest, body: TeamInterface) {
+        const team = await this.teamService.getTeamById(
+            req.currentUser.team_id,
+        );
         for (const memberId of body.members) {
             // use try and catch
             const user = await this.userService.findById(memberId);
@@ -76,8 +75,9 @@ export class UserTeamService {
         return team;
     }
 
-    async deleteTeam(id: string, req: customRequest) {
+    async deleteTeam(req: customRequest) {
         // const users = await this.userService.getUsersByTeamId(id);
+        const id = req.currentUser.team_id;
 
         await this.userRepo
             .createQueryBuilder()

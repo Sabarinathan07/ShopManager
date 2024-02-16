@@ -9,14 +9,17 @@ import {
     Post,
     Put,
     Req,
+    UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { TeamService } from '../services/team.service';
 import { TeamInterface } from '../interfaces';
 import { UserTeamService } from '../services/user-team.service';
+import { TeamAdminGuard } from 'src/guards/TeamAdminGuard';
+import { TeamInterceptor } from '../interceptors/team.interceptor';
 
 @Controller('/api/team')
-// @UseInterceptors(TeamInterceptor)
+@UseInterceptors(TeamInterceptor)
 export class TeamController {
     constructor(
         private teamService: TeamService,
@@ -42,40 +45,30 @@ export class TeamController {
         return await this.userTeamService.createTeam(req, body);
     }
 
-    @Put('/:id')
-    // add admin guard
+    @Put('/')
+    @UseGuards(TeamAdminGuard)
     async addMember(
-        @Param('id') id: string,
         @Body() body: TeamInterface,
         @Req() req: customRequest,
     ) {
-        return await this.userTeamService.addMembersToTeam(
-            req,
-            id,
-            body,
-        );
+        return await this.userTeamService.addMembersToTeam(req, body);
     }
 
-    @Put('/remove-members/:id')
-    // add admin guard
+    @Put('/remove-members/')
+    @UseGuards(TeamAdminGuard)
     async removeMember(
-        @Param('id') id: string,
         @Body() body: TeamInterface,
         @Req() req: customRequest,
     ) {
         return await this.userTeamService.removeMembersfromTeam(
             req,
-            id,
             body,
         );
     }
 
-    @Delete('/:id')
-    // add admin guard
-    async deleteTeam(
-        @Param('id') id: string,
-        @Req() req: customRequest,
-    ) {
-        return await this.userTeamService.deleteTeam(id, req);
+    @Delete('/delete')
+    @UseGuards(TeamAdminGuard)
+    async deleteTeam(@Req() req: customRequest) {
+        return await this.userTeamService.deleteTeam(req);
     }
 }
