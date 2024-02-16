@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Role } from '../../../microservices/user/enums/';
+import { Team } from 'src/microservices/team/entity/team.entity';
 
 export class UserInterface {
     id: string;
@@ -12,4 +13,5 @@ export class UserInterface {
     @ApiPropertyOptional()
     role?: Role;
     token?: string;
+    team_id?: Team;
 }

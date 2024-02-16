@@ -98,6 +98,17 @@ export class OrderService {
         return this.mapOrdersResponse(order);
     }
 
+    async getOrdersByTeam(req: customRequest) {
+        const team_id = req.currentUser.team_id;
+        const order = await this.repo
+            .createQueryBuilder('order')
+            .leftJoinAndSelect('order.item', 'item')
+            .leftJoinAndSelect('order.customer', 'user')
+            .where('user.team_id = :team_id', { team_id: team_id })
+            .getMany();
+        return this.mapOrdersResponse(order);
+    }
+
     async getAmountByDay(body: any, req: customRequest) {
         const startOfDay = new Date(body.date);
         startOfDay.setUTCHours(0, 0, 0, 0);
@@ -241,8 +252,8 @@ export class OrderService {
     }
 
     private dbObjectToCustomer(user: User): UserInterface {
-        const { id, name, email } = user;
-        return <UserInterface>{ id, name, email };
+        const { id, name, email, team_id } = user;
+        return <UserInterface>{ id, name, email, team_id };
     }
 
     private dbObjectToItem(item: Item): ItemInterface {

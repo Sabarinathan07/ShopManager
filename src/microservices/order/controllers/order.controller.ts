@@ -45,6 +45,11 @@ export class OrderController {
         return await this.orderService.getAllOrders();
     }
 
+    @Get('/team')
+    async getOrdersByTeam(@Req() req: customRequest) {
+        return await this.orderService.getOrdersByTeam(req);
+    }
+
     @Post('/:timeline')
     async getAmount(
         @Body() body: TimelineInterface,

@@ -30,6 +30,7 @@ export class UserService {
     async findById(id: string) {
         const user = await this.repo
             .createQueryBuilder('user')
+            .leftJoinAndSelect('user.team', 'team.id')
             .where('user.id = :id', { id })
             .getOne();
         return user;
@@ -49,6 +50,7 @@ export class UserService {
     // }
 
     async getAllUsers() {
+        // comment the next line
         // await this.cacheManager.reset();
         const ordersC = await this.cacheManager.get('Users');
         console.log('before cache return');
@@ -71,9 +73,6 @@ export class UserService {
             .leftJoinAndSelect('user.team', 'team')
             .where('user.team = :id', { id })
             .getMany();
-
-        console.log(users);
-        console.log('jiojoasd');
 
         return users;
     }

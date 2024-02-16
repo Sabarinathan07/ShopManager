@@ -4,6 +4,7 @@ import {
     Column,
     OneToMany,
     ManyToOne,
+    JoinColumn,
 } from 'typeorm';
 import { Order } from '../../order/entity/';
 import { Role } from '../enums/';
@@ -35,7 +36,11 @@ export class User {
     @Column({ default: false })
     teamadmin: boolean;
 
+    @Column({ name: 'team_id', nullable: true })
+    team_id: Team;
+
     @ManyToOne(() => Team, (team) => team.users)
+    @JoinColumn({ name: 'team_id' })
     team: Team;
 
     @OneToMany(() => Order, (order) => order.customer)

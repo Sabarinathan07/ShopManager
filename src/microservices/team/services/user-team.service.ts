@@ -67,9 +67,6 @@ export class UserTeamService {
         body: TeamInterface,
     ) {
         const team = await this.teamService.getTeamById(id);
-        console.log(id);
-        console.log(team);
-        console.log(body.members);
         for (const memberId of body.members) {
             // use try and catch
             const user = await this.userService.findById(memberId);
@@ -81,8 +78,6 @@ export class UserTeamService {
 
     async deleteTeam(id: string, req: customRequest) {
         // const users = await this.userService.getUsersByTeamId(id);
-
-        // console.log(users);
 
         await this.userRepo
             .createQueryBuilder()
